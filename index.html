@@ -1,0 +1,2432 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>مراجعة واختبار - Automatic Control Systems</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23163c39'/%3E%3Ctext x='32' y='39' font-size='20' text-anchor='middle' fill='white' font-family='Arial'%3EACS%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #f7f3eb;
+      --panel: #ffffff;
+      --panel-2: #fbfbf7;
+      --ink: #1d2430;
+      --muted: #626b78;
+      --line: #ded8cd;
+      --teal: #0f766e;
+      --teal-soft: #e4f3f0;
+      --rose: #b4235a;
+      --rose-soft: #f8e6ee;
+      --amber: #b7791f;
+      --amber-soft: #fff3d6;
+      --indigo: #3949ab;
+      --indigo-soft: #e9ecff;
+      --green: #2f7d32;
+      --green-soft: #e7f4e8;
+      --danger: #b3261e;
+      --shadow: 0 16px 40px rgba(35, 37, 45, .08);
+      --radius: 8px;
+      --font: "Avenir Next", "Segoe UI", Tahoma, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      letter-spacing: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(247, 243, 235, .94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      width: min(1220px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 14px 0 12px;
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #29433e;
+      background: #163c39;
+      color: white;
+      border-radius: var(--radius);
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .tab-btn,
+    .soft-btn,
+    .primary-btn,
+    .danger-btn,
+    .icon-button {
+      min-height: 40px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      padding: 8px 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover,
+    .soft-btn:hover,
+    .primary-btn:hover,
+    .danger-btn:hover,
+    .icon-button:hover {
+      transform: translateY(-1px);
+      border-color: #bcb5a7;
+    }
+
+    .tab-btn[aria-selected="true"] {
+      background: var(--teal);
+      color: white;
+      border-color: var(--teal);
+    }
+
+    .primary-btn {
+      background: var(--ink);
+      color: white;
+      border-color: var(--ink);
+    }
+
+    .danger-btn {
+      background: white;
+      color: var(--danger);
+      border-color: #e5b7b1;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    main {
+      width: min(1220px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 22px 0 42px;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .summary-panel,
+    .tool-panel,
+    .question-panel,
+    .result-panel,
+    .source-panel,
+    .calc-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .summary-panel {
+      padding: 20px;
+      display: grid;
+      align-content: center;
+      gap: 16px;
+      min-height: 228px;
+    }
+
+    .headline {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.25;
+      max-width: 760px;
+    }
+
+    .headline span {
+      color: var(--teal);
+    }
+
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat-box {
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      border-radius: var(--radius);
+      padding: 10px;
+      min-height: 74px;
+    }
+
+    .stat-value {
+      display: block;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .tool-panel {
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      min-height: 228px;
+    }
+
+    .tool-panel h2,
+    .section-title,
+    .question-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.3;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .topic-filter,
+    .row-controls,
+    .exam-controls,
+    .canvas-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      min-height: 34px;
+      padding: 6px 10px;
+      border-radius: var(--radius);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .chip.active {
+      background: var(--indigo);
+      border-color: var(--indigo);
+      color: white;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .review-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      min-height: 218px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .review-card h3 {
+      margin: 0;
+      font-size: 19px;
+      line-height: 1.35;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 3px 8px;
+      border-radius: var(--radius);
+      font-size: 12px;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--muted);
+    }
+
+    .tag.teal {
+      color: var(--teal);
+      background: var(--teal-soft);
+      border-color: #bbdfd9;
+    }
+
+    .tag.rose {
+      color: var(--rose);
+      background: var(--rose-soft);
+      border-color: #ecc7d6;
+    }
+
+    .tag.amber {
+      color: var(--amber);
+      background: var(--amber-soft);
+      border-color: #efd696;
+    }
+
+    .card-list {
+      margin: 0;
+      padding: 0 18px 0 0;
+      color: var(--muted);
+    }
+
+    .formula {
+      direction: ltr;
+      text-align: left;
+      background: #f6f7f5;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 8px 10px;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 14px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .manual-questions {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .manual-item {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-right: 4px solid var(--rose);
+      border-radius: var(--radius);
+      padding: 12px;
+      min-height: 110px;
+      display: grid;
+      align-content: start;
+      gap: 6px;
+    }
+
+    .manual-item strong {
+      font-size: 20px;
+      color: var(--rose);
+    }
+
+    .diagram-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .diagram-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+      min-height: 210px;
+    }
+
+    .diagram-card svg {
+      width: 100%;
+      min-height: 130px;
+      background: #faf9f5;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .calc-panel {
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      align-items: end;
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 13px;
+      display: grid;
+      gap: 5px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: white;
+      color: var(--ink);
+      padding: 10px 11px;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, .12);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .question-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .question-panel {
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+      min-height: 460px;
+    }
+
+    .question-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .question-prompt {
+      font-size: 22px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .options {
+      display: grid;
+      gap: 9px;
+    }
+
+    .option {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel-2);
+      padding: 10px 12px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: start;
+      cursor: pointer;
+    }
+
+    .option input {
+      width: auto;
+      margin-top: 6px;
+      accent-color: var(--teal);
+    }
+
+    .feedback-box {
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      padding: 12px;
+      display: none;
+    }
+
+    .feedback-box.show {
+      display: block;
+    }
+
+    .feedback-box.correct {
+      border-color: #a7d6aa;
+      background: var(--green-soft);
+    }
+
+    .feedback-box.wrong {
+      border-color: #e6b0a9;
+      background: #fff0ee;
+    }
+
+    .answer-key {
+      display: grid;
+      gap: 8px;
+    }
+
+    .side-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .mini-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: #eee8db;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #e2dacb;
+    }
+
+    .progress-bar span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--teal);
+      transition: width .2s ease;
+    }
+
+    .drawing-wrap {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: white;
+      overflow: hidden;
+    }
+
+    .canvas-toolbar {
+      padding: 10px;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel-2);
+    }
+
+    .canvas-toolbar label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+    }
+
+    .canvas-toolbar input[type="range"] {
+      width: 92px;
+      padding: 0;
+    }
+
+    .canvas-toolbar input[type="color"] {
+      width: 42px;
+      height: 34px;
+      padding: 3px;
+    }
+
+    .sketch-canvas {
+      width: 100%;
+      height: 280px;
+      display: block;
+      touch-action: none;
+      background: #fffdf8;
+    }
+
+    .draw-view-layout {
+      display: grid;
+      grid-template-columns: 340px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .large-canvas .sketch-canvas {
+      height: 580px;
+    }
+
+    .result-panel {
+      padding: 16px;
+      display: none;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .result-panel.show {
+      display: grid;
+    }
+
+    .score-ring {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--teal) var(--score-deg), #ece6da 0);
+      border: 1px solid var(--line);
+      position: relative;
+    }
+
+    .score-ring::after {
+      content: "";
+      position: absolute;
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    .score-ring strong {
+      position: relative;
+      z-index: 1;
+      font-size: 22px;
+    }
+
+    .review-answer-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .review-answer-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px;
+      background: var(--panel-2);
+    }
+
+    .review-answer-item.good {
+      border-color: #a7d6aa;
+    }
+
+    .review-answer-item.bad {
+      border-color: #e4a9a0;
+    }
+
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .source-panel {
+      overflow: hidden;
+    }
+
+    .source-panel img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      display: block;
+      background: #ece6da;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .source-panel div {
+      padding: 12px;
+    }
+
+    .source-panel h3 {
+      margin: 0 0 4px;
+      font-size: 17px;
+    }
+
+    .empty-state {
+      border: 1px dashed #cfc6b7;
+      border-radius: var(--radius);
+      padding: 18px;
+      background: rgba(255, 255, 255, .65);
+      color: var(--muted);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 980px) {
+      .topbar-inner,
+      .dashboard,
+      .question-layout,
+      .draw-view-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-tabs {
+        justify-content: flex-start;
+      }
+
+      .review-grid,
+      .diagram-strip,
+      .sources-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .manual-questions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .calc-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      main,
+      .topbar-inner {
+        width: min(100% - 20px, 1220px);
+      }
+
+      .topbar-inner {
+        padding: 10px 0;
+        gap: 10px;
+      }
+
+      .brand {
+        align-items: center;
+      }
+
+      .mark {
+        width: 38px;
+        height: 38px;
+      }
+
+      h1 {
+        font-size: 18px;
+      }
+
+      .headline {
+        font-size: 24px;
+      }
+
+      .review-grid,
+      .diagram-strip,
+      .manual-questions,
+      .sources-grid,
+      .calc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .summary-panel,
+      .tool-panel {
+        min-height: auto;
+      }
+
+      .question-prompt {
+        font-size: 19px;
+      }
+
+      .nav-tabs {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      .tab-btn {
+        width: auto;
+        min-width: 0;
+        min-height: 36px;
+        padding: 6px 4px;
+        font-size: 14px;
+      }
+
+      .soft-btn,
+      .primary-btn,
+      .danger-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="mark">ACS</div>
+          <div>
+            <h1>مراجعة واختبار أنظمة التحكم الآلي</h1>
+            <p class="subtitle">Components, feedback, transfer functions, sensors</p>
+          </div>
+        </div>
+        <nav class="nav-tabs" aria-label="أقسام الموقع">
+          <button class="tab-btn" data-view="review" aria-selected="true">مراجعة</button>
+          <button class="tab-btn" data-view="practice" aria-selected="false">تدريب</button>
+          <button class="tab-btn" data-view="exam" aria-selected="false">اختبار</button>
+          <button class="tab-btn" data-view="draw" aria-selected="false">رسم</button>
+          <button class="tab-btn" data-view="sources" aria-selected="false">الصور</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="reviewView" class="view active">
+        <div class="dashboard">
+          <div class="summary-panel">
+            <div>
+              <h2 class="headline">ذاكر المحاضرات بصيغة <span>بطاقات + اختبار + كتابة باليد</span></h2>
+              <p class="muted">المحتوى مبني من ملفات ACS والصور المرسلة، مع أسئلة المقال والرسم الموجودة في الورقة.</p>
+            </div>
+            <div class="quick-stats" id="quickStats"></div>
+          </div>
+          <div class="tool-panel">
+            <h2>ملاحظات سريعة</h2>
+            <textarea id="studyNotes" placeholder="اكتب أي ملاحظة أو قانون تبغى تراجعه لاحقًا"></textarea>
+            <div class="row-controls">
+              <button class="primary-btn" id="saveNotesBtn">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>
+                حفظ
+              </button>
+              <button class="soft-btn" id="clearNotesBtn">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 15H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                مسح
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row-controls">
+          <h2 class="section-title">بطاقات المراجعة</h2>
+          <div class="topic-filter" id="topicFilter"></div>
+        </div>
+        <div class="review-grid" id="reviewGrid"></div>
+
+        <div class="diagram-strip" id="diagramStrip"></div>
+
+        <section class="calc-panel">
+          <h2 class="section-title">حاسبة سريعة للـ Transfer Function</h2>
+          <div class="calc-grid">
+            <label>النوع
+              <select id="calcType">
+                <option value="series">Series</option>
+                <option value="parallel">Parallel</option>
+                <option value="negative">Negative feedback</option>
+                <option value="positive">Positive feedback</option>
+              </select>
+            </label>
+            <label>G1 أو G
+              <input id="calcG1" type="number" value="4" step="any">
+            </label>
+            <label>G2 أو H
+              <input id="calcG2" type="number" value="5" step="any">
+            </label>
+            <label>G3
+              <input id="calcG3" type="number" value="" step="any" placeholder="اختياري">
+            </label>
+            <button class="primary-btn" id="calcBtn">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h10"/></svg>
+              احسب
+            </button>
+            <div class="formula" id="calcResult">G_eq = 4 × 5 = 20</div>
+          </div>
+        </section>
+
+        <h2 class="section-title" style="margin-top:18px;">أسئلة الورقة المكتوبة</h2>
+        <div class="manual-questions" id="manualQuestions"></div>
+
+        <h2 class="section-title" style="margin-top:18px;">واجبات الدكتور</h2>
+        <div class="review-grid" id="homeworkList"></div>
+      </section>
+
+      <section id="practiceView" class="view">
+        <div class="question-layout">
+          <div class="question-panel" id="practicePanel"></div>
+          <aside class="side-stack">
+            <div class="mini-panel">
+              <h2 class="section-title">فلترة التدريب</h2>
+              <select id="practiceFilter"></select>
+              <div class="progress-bar" aria-label="نسبة التقدم"><span id="practiceProgress"></span></div>
+              <div class="row-controls">
+                <button class="soft-btn" id="prevPractice">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+                  السابق
+                </button>
+                <button class="soft-btn" id="nextPractice">
+                  التالي
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="mini-panel">
+              <h2 class="section-title">لوحة الحل</h2>
+              <div class="drawing-wrap" data-canvas-shell="practice"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="examView" class="view">
+        <div class="dashboard">
+          <div class="summary-panel">
+            <h2 class="headline">اختبار مختلط</h2>
+            <p class="muted">التصحيح التلقائي للأسئلة الموضوعية والحسابية. الأسئلة المقالية تظهر مع نموذج إجابة بعد التسليم.</p>
+            <div class="exam-controls">
+              <label>عدد الأسئلة
+                <select id="examCount">
+                  <option value="12">12</option>
+                  <option value="18" selected>18</option>
+                  <option value="all">الكل</option>
+                </select>
+              </label>
+              <button class="primary-btn" id="startExamBtn">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7Z"/></svg>
+                ابدأ
+              </button>
+            </div>
+          </div>
+          <div class="tool-panel">
+            <h2>مؤشر الاختبار</h2>
+            <div class="quick-stats" id="examStats"></div>
+            <div class="progress-bar"><span id="examProgress"></span></div>
+          </div>
+        </div>
+
+        <div class="question-layout hidden" id="examWorkspace">
+          <div class="question-panel" id="examPanel"></div>
+          <aside class="side-stack">
+            <div class="mini-panel">
+              <h2 class="section-title">تنقل</h2>
+              <div class="row-controls">
+                <button class="soft-btn" id="prevExam">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+                  السابق
+                </button>
+                <button class="soft-btn" id="nextExam">
+                  التالي
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+              </div>
+              <button class="primary-btn" id="submitExamBtn">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+                تسليم
+              </button>
+            </div>
+            <div class="mini-panel">
+              <h2 class="section-title">مساحة حل</h2>
+              <div class="drawing-wrap" data-canvas-shell="exam"></div>
+            </div>
+          </aside>
+        </div>
+        <div class="result-panel" id="examResult"></div>
+      </section>
+
+      <section id="drawView" class="view">
+        <div class="draw-view-layout">
+          <aside class="mini-panel">
+            <h2 class="section-title">تمارين الرسم</h2>
+            <select id="drawPromptSelect"></select>
+            <div class="answer-key" id="drawPromptText"></div>
+            <button class="soft-btn" id="showDrawModelBtn">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+              نموذج مختصر
+            </button>
+            <div class="feedback-box" id="drawModelBox"></div>
+          </aside>
+          <div class="drawing-wrap large-canvas" data-canvas-shell="draw"></div>
+        </div>
+      </section>
+
+      <section id="sourcesView" class="view">
+        <h2 class="section-title">الصور المستخدمة داخل المراجعة</h2>
+        <div class="sources-grid">
+          <article class="source-panel">
+            <img src="assets/handwritten-questions.jpg" alt="صورة الأسئلة المكتوبة يدويًا">
+            <div>
+              <h3>أسئلة الورقة</h3>
+              <p class="muted">الأسئلة المقالية والرسم: elastic sensor, Bourdon, LVDT, marine air vessel, boiler feed water.</p>
+            </div>
+          </article>
+          <article class="source-panel">
+            <img src="assets/feedback-comparison.jpg" alt="مقارنة بين positive feedback و negative feedback">
+            <div>
+              <h3>مقارنة feedback</h3>
+              <p class="muted">استخدمت للمقارنة بين الاستقرار والدقة والاهتزازات والاستخدام الصناعي.</p>
+            </div>
+          </article>
+          <article class="source-panel">
+            <img src="assets/block-diagram-feedback.jpg" alt="مثال block diagram مع feedback">
+            <div>
+              <h3>Block diagram</h3>
+              <p class="muted">استخدمت منه أمثلة الجمع والتوازي والـ feedback مع H(s).</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="mini-panel" style="margin-top:14px;">
+          <h2 class="section-title">الملفات المرجعية</h2>
+          <ul class="card-list">
+            <li>2-fundamentals for ACS..pdf</li>
+            <li>3-4- open loop & closed loop & transfer function.pdf</li>
+            <li>5-Lecture Sensors (1).ppt</li>
+            <li>الصور المرسلة من المحاضرة والورقة المكتوبة</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const icons = {
+      check: '<svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>',
+      eye: '<svg class="icon" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>',
+      refresh: '<svg class="icon" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>',
+      trash: '<svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 15H6L5 6"/></svg>',
+      pen: '<svg class="icon" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+      eraser: '<svg class="icon" viewBox="0 0 24 24"><path d="m7 21-4-4L16 4a2.8 2.8 0 0 1 4 4L7 21Z"/><path d="M14 7l3 3"/><path d="M7 21h13"/></svg>',
+      download: '<svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>'
+    };
+
+    const categories = [
+      "الكل",
+      "المكونات",
+      "Feedback",
+      "Transfer Function",
+      "Sensors",
+      "HW",
+      "رسم ومقال"
+    ];
+
+    const reviewCards = [
+      {
+        title: "Control System",
+        category: "المكونات",
+        tags: ["input", "output", "controller"],
+        body: [
+          "النظام يتحكم في عملية أو جهاز ليجعل الخرج قريبًا من القيمة المطلوبة.",
+          "الأمثلة: الغلاية، الثلاجة، التحكم في السرعة، نظام التوجيه."
+        ],
+        formula: "Input -> Controller -> Plant -> Output"
+      },
+      {
+        title: "Plant",
+        category: "المكونات",
+        tags: ["process", "controlled object"],
+        body: [
+          "هو الشيء أو العملية التي نريد التحكم فيها.",
+          "قد يكون محرك DC، غلاية، نظام سرعة، أو عملية صناعية."
+        ],
+        formula: "Plant = physical system to be controlled"
+      },
+      {
+        title: "Sensors",
+        category: "Sensors",
+        tags: ["transducer", "feedback"],
+        body: [
+          "الحساس يحول التغير الفيزيائي مثل الضغط أو الحرارة أو الحركة إلى إشارة كهربائية.",
+          "يُستخدم غالبًا لتغذية الراجع حتى يعرف المتحكم حالة الخرج."
+        ],
+        formula: "Physical quantity -> electrical signal"
+      },
+      {
+        title: "Controllers",
+        category: "المكونات",
+        tags: ["P", "I", "D"],
+        body: [
+          "المتحكم يعالج error signal ثم يرسل أمرًا للمشغل.",
+          "P سريع، I يزيل steady-state error، و D يساعد في التنبؤ وتقليل الاهتزاز."
+        ],
+        formula: "Error -> Controller -> Control signal"
+      },
+      {
+        title: "Actuators",
+        category: "المكونات",
+        tags: ["linear", "rotary"],
+        body: [
+          "المشغل يحول إشارة التحكم إلى فعل فيزيائي.",
+          "أنواعه حسب الطاقة: hydraulic, pneumatic, electrical, magnetic, mechanical."
+        ],
+        formula: "Control signal -> physical action"
+      },
+      {
+        title: "Open Loop",
+        category: "Feedback",
+        tags: ["no feedback", "simple"],
+        body: [
+          "لا يقيس الخرج ولا يصحح الخطأ.",
+          "بسيط ورخيص، لكنه يتأثر بالاضطرابات ودقته أقل."
+        ],
+        formula: "Controller action independent of output"
+      },
+      {
+        title: "Closed Loop",
+        category: "Feedback",
+        tags: ["feedback", "accurate"],
+        body: [
+          "يقيس الخرج ويقارنه بالمدخل المطلوب.",
+          "أدق وأفضل ضد الاضطرابات، لكنه أكثر تعقيدًا وكلفة."
+        ],
+        formula: "Error = Reference - Feedback"
+      },
+      {
+        title: "Positive vs Negative Feedback",
+        category: "Feedback",
+        tags: ["stability", "accuracy"],
+        body: [
+          "Positive feedback يضاف إلى المدخل، يزيد error غالبًا ويقلل الاستقرار.",
+          "Negative feedback يطرح من المدخل، يحسن الاستقرار والدقة ويقلل الاهتزازات."
+        ],
+        formula: "Negative: G/(1+GH) | Positive: G/(1-GH)"
+      },
+      {
+        title: "Transfer Function",
+        category: "Transfer Function",
+        tags: ["Laplace", "ratio"],
+        body: [
+          "هي نسبة تحويل لابلاس للخرج إلى المدخل مع افتراض initial conditions = 0.",
+          "تصف العلاقة الرياضية بين input و output."
+        ],
+        formula: "T(s) = C(s) / R(s)"
+      },
+      {
+        title: "Series Connection",
+        category: "Transfer Function",
+        tags: ["cascade", "multiply"],
+        body: [
+          "عند توصيل البلوكات على التوالي، الـ equivalent gain يساوي حاصل الضرب.",
+          "مثال: G1=4 و G2=5 يعطي G_eq=20."
+        ],
+        formula: "G_eq = G1 * G2 * G3"
+      },
+      {
+        title: "Parallel Connection",
+        category: "Transfer Function",
+        tags: ["sum", "branches"],
+        body: [
+          "عند تفرع الإشارة ثم جمع المخارج، الـ equivalent gain يساوي مجموع الفروع.",
+          "مثال: G1=10 و G2=6 يعطي G_eq=16."
+        ],
+        formula: "G_eq = G1 + G2"
+      },
+      {
+        title: "Good Control System",
+        category: "Feedback",
+        tags: ["stable", "accurate"],
+        body: [
+          "المطلوب: stability, accuracy, speed of response, low sensitivity, low noise.",
+          "يفضل أن يكون بسيطًا واقتصاديًا وسهل الصيانة."
+        ],
+        formula: "Stable + accurate + fast + economical"
+      },
+      {
+        title: "Temperature Sensors",
+        category: "Sensors",
+        tags: ["RTD", "thermocouple", "thermistor"],
+        body: [
+          "Thermocouple يعطي voltage صغير بسبب اختلاف الحرارة بين وصلتين.",
+          "RTD تتغير مقاومته مع الحرارة، و thermistor حساس جدًا للتغيرات الصغيرة.",
+          "Liquid-in-glass أو bimetallic sensors مناسبة للبيان/التشغيل البسيط."
+        ],
+        formula: "Temperature change -> resistance/voltage/movement"
+      },
+      {
+        title: "Ultrasonic Level Sensor",
+        category: "Sensors",
+        tags: ["level", "time of flight"],
+        body: [
+          "يرسل الحساس موجة صوتية نحو سطح السائل ثم يستقبل الانعكاس.",
+          "المسافة بين الحساس والسطح = v × t / 2 لأن الموجة ذهاب وعودة.",
+          "مستوى السائل = ارتفاع الخزان - المسافة الفارغة."
+        ],
+        formula: "Level = H - (v * t / 2)"
+      },
+      {
+        title: "Photocells in Marine",
+        category: "Sensors",
+        tags: ["light", "marine"],
+        body: [
+          "تستخدم للكشف عن اللهب في boiler/burner safety.",
+          "تستخدم في automatic navigation/deck lighting حسب شدة الإضاءة.",
+          "تستخدم كـ photoelectric detector للحواجز أو عدّ الأجسام أو كشف وجودها."
+        ],
+        formula: "Light intensity -> electrical signal"
+      }
+    ];
+
+    const manualQuestions = [
+      { title: "Elastic sensor", text: "اشرحه مع رسم يوضح العنصر المرن والحركة الناتجة عن الضغط أو القوة." },
+      { title: "Bourdon ON-OFF", text: "كيف نستخدم Bourdon tube داخل on-off controller أو pressure switch؟" },
+      { title: "Marine air vessel", text: "اشرح طريقة التحكم في ضغط air vessel باستخدام feedback." },
+      { title: "LVDT", text: "كيف نحول الضغط P إلى voltage باستخدام LVDT؟" },
+      { title: "Boiler feed water", text: "صف طريقة التحكم في مستوى ماء تغذية الغلاية." }
+    ];
+
+    const homeworkAssignments = [
+      {
+        title: "HW1 - Closed loop and feedback",
+        questions: [
+          "Describe with aid of sketch the main components of a closed-loop automatic control system.",
+          "Identify the different types of signals and the function of each component.",
+          "Compare with sketch between open-loop and closed-loop control systems.",
+          "What are the equations of negative and positive feedback?"
+        ]
+      },
+      {
+        title: "HW2 - Pressure and marine control",
+        questions: [
+          "Describe with aid of sketch the elastic pressure sensors.",
+          "How to use Bourdon tube into On/Off switch?",
+          "Describe how to control marine air vessel.",
+          "Describe what LVDT is and how it converts pressure to voltage.",
+          "Describe a method to control marine boiler feed water level."
+        ]
+      },
+      {
+        title: "HW3 - Temperature, level, photocells",
+        questions: [
+          "Describe with aid of sketch the different types of temperature sensors.",
+          "With respect to level sensors, calculate the level of a tank with a height of 3 m using the ultrasonic method, if the reflection time is 3x10^-3 s and the speed of sound is 340 m/s.",
+          "Explain how photocells are used in three different marine applications."
+        ]
+      }
+    ];
+
+    const quizBank = [
+      {
+        id: "q1",
+        type: "mcq",
+        category: "المكونات",
+        prompt: "ما وظيفة الـ sensor في نظام التحكم؟",
+        options: [
+          "تحويل التغير الفيزيائي إلى إشارة كهربائية",
+          "تكبير الخرج فقط",
+          "إلغاء الحاجة إلى controller",
+          "تخزين الطاقة الميكانيكية"
+        ],
+        answer: 0,
+        explanation: "الحساس أو transducer يحول كمية مثل pressure أو temperature إلى إشارة كهربائية يمكن قياسها."
+      },
+      {
+        id: "q2",
+        type: "mcq",
+        category: "المكونات",
+        prompt: "أي خيار يمثل plant في نظام التحكم؟",
+        options: ["Boiler", "Keyboard", "Spreadsheet", "Battery فقط"],
+        answer: 0,
+        explanation: "الـ plant هو العملية أو الجهاز المراد التحكم فيه، والغلاية مثال واضح."
+      },
+      {
+        id: "q3",
+        type: "fill",
+        category: "Feedback",
+        prompt: "أكمل الفراغ: في الـ closed loop، تتم مقارنة الخرج الفعلي مع الـ ______.",
+        accepted: ["setpoint", "reference", "reference input", "desired output", "القيمة المطلوبة", "المرجع"],
+        displayAnswer: "setpoint / reference",
+        explanation: "المتحكم يقارن القيمة المطلوبة بالخرج المقاس لتكوين error signal."
+      },
+      {
+        id: "q4",
+        type: "mcq",
+        category: "Feedback",
+        prompt: "ما الخاصية الأساسية في open loop control system؟",
+        options: [
+          "لا يستخدم feedback لتصحيح الخرج",
+          "دائمًا أدق من closed loop",
+          "يعتمد على sensor في كل الحالات",
+          "لا يحتوي controller"
+        ],
+        answer: 0,
+        explanation: "في open loop لا يعود الخرج للمدخل، لذلك لا يصحح النظام الخطأ الناتج من disturbances."
+      },
+      {
+        id: "q5",
+        type: "mcq",
+        category: "Feedback",
+        prompt: "أي وصف يناسب negative feedback؟",
+        options: [
+          "feedback signal يُطرح من input ويزيد الاستقرار غالبًا",
+          "feedback signal يُضاف دائمًا ويقلل الدقة",
+          "لا علاقة له بالاستقرار",
+          "يستخدم فقط في الأنظمة اليدوية"
+        ],
+        answer: 0,
+        explanation: "negative feedback هو الشائع صناعيًا لأنه يحسن stability و accuracy."
+      },
+      {
+        id: "q6",
+        type: "fill",
+        category: "Feedback",
+        prompt: "أكمل الفراغ: Positive feedback عادة يجعل oscillations أكثر ______.",
+        accepted: ["likely", "احتمالا", "احتمالًا", "حدوثا", "حدوثًا", "more likely", "أكثر"],
+        displayAnswer: "more likely / أكثر احتمالًا",
+        explanation: "positive feedback قد يرفع الخطأ ويجعل النظام أقل استقرارًا وأكثر عرضة للاهتزاز."
+      },
+      {
+        id: "q7",
+        type: "numeric",
+        category: "Transfer Function",
+        prompt: "Series connection: إذا كان G1=4 و G2=5، احسب G_eq.",
+        value: 20,
+        tolerance: 0.01,
+        displayAnswer: "20",
+        explanation: "في التوالي نضرب: G_eq = 4 × 5 = 20."
+      },
+      {
+        id: "q8",
+        type: "numeric",
+        category: "Transfer Function",
+        prompt: "Parallel connection: إذا كان G1=10 و G2=6، احسب G_eq.",
+        value: 16,
+        tolerance: 0.01,
+        displayAnswer: "16",
+        explanation: "في التوازي نجمع: G_eq = 10 + 6 = 16."
+      },
+      {
+        id: "q9",
+        type: "fill",
+        category: "Transfer Function",
+        prompt: "أكمل الفراغ: دالة التحويل هي نسبة تحويل لابلاس للـ output إلى الـ ______.",
+        accepted: ["input", "المدخل", "input signal", "دخل"],
+        displayAnswer: "input",
+        explanation: "Transfer function = output Laplace transform / input Laplace transform."
+      },
+      {
+        id: "q10",
+        type: "mcq",
+        category: "Transfer Function",
+        prompt: "ما صيغة closed-loop transfer function للـ negative feedback؟",
+        options: ["G(s)/(1 + G(s)H(s))", "G(s)/(1 - G(s)H(s))", "G(s) + H(s)", "G(s)H(s)"],
+        answer: 0,
+        explanation: "للتغذية الراجعة السالبة: C(s)/R(s) = G(s) / (1 + G(s)H(s))."
+      },
+      {
+        id: "q11",
+        type: "mcq",
+        category: "Transfer Function",
+        prompt: "ما صيغة closed-loop transfer function للـ positive feedback؟",
+        options: ["G(s)/(1 - G(s)H(s))", "G(s)/(1 + G(s)H(s))", "1/G(s)H(s)", "G1+G2"],
+        answer: 0,
+        explanation: "للتغذية الراجعة الموجبة يظهر المقام 1 - GH."
+      },
+      {
+        id: "q12",
+        type: "numeric",
+        category: "Transfer Function",
+        prompt: "Negative feedback: إذا كان G=10 و H=0.5، احسب C(s)/R(s).",
+        value: 1.6667,
+        tolerance: 0.02,
+        displayAnswer: "1.67 تقريبًا",
+        explanation: "T = G/(1+GH) = 10/(1+10×0.5) = 10/6 = 1.67."
+      },
+      {
+        id: "q13",
+        type: "numeric",
+        category: "Transfer Function",
+        prompt: "Positive feedback: إذا كان G=10 و H=0.5، احسب C(s)/R(s).",
+        value: -2.5,
+        tolerance: 0.02,
+        displayAnswer: "-2.5",
+        explanation: "T = G/(1-GH) = 10/(1-5) = -2.5، وهذا يشير إلى مشكلة استقرار في هذا المثال."
+      },
+      {
+        id: "q14",
+        type: "fill",
+        category: "Feedback",
+        prompt: "أكمل الفراغ: error signal = reference input - ______ signal.",
+        accepted: ["feedback", "feedback signal", "اشارة الراجع", "إشارة الراجع", "راجع"],
+        displayAnswer: "feedback signal",
+        explanation: "في negative feedback: E(s) = R(s) - B(s)."
+      },
+      {
+        id: "q15",
+        type: "numeric",
+        category: "Feedback",
+        prompt: "إذا كان R=12 و feedback signal B=9، ما قيمة error signal؟",
+        value: 3,
+        tolerance: 0.01,
+        displayAnswer: "3",
+        explanation: "E = R - B = 12 - 9 = 3."
+      },
+      {
+        id: "q16",
+        type: "mcq",
+        category: "المكونات",
+        prompt: "ما وظيفة actuator؟",
+        options: [
+          "تحويل إشارة التحكم إلى فعل فيزيائي",
+          "قياس الضغط فقط",
+          "حفظ setpoint",
+          "حساب Laplace transform"
+        ],
+        answer: 0,
+        explanation: "المشغل ينفذ قرار المتحكم، مثل فتح صمام أو تشغيل محرك."
+      },
+      {
+        id: "q17",
+        type: "fill",
+        category: "المكونات",
+        prompt: "أكمل الفراغ: من أنواع actuators حسب الطاقة: hydraulic, pneumatic, electrical, magnetic, و ______.",
+        accepted: ["mechanical", "ميكانيكي", "mechanical actuators"],
+        displayAnswer: "mechanical",
+        explanation: "هذه الأنواع مذكورة ضمن تصنيف المشغلات في المحاضرة."
+      },
+      {
+        id: "q18",
+        type: "mcq",
+        category: "المكونات",
+        prompt: "أي قائمة تمثل مكونات رئيسية في control system؟",
+        options: [
+          "Plant, sensors, controllers, actuators, feedback",
+          "Keyboard, monitor, mouse, printer",
+          "Only plant and output",
+          "Only input and battery"
+        ],
+        answer: 0,
+        explanation: "هذه هي القائمة الأساسية من ملف fundamentals."
+      },
+      {
+        id: "q19",
+        type: "fill",
+        category: "Sensors",
+        prompt: "أكمل الفراغ: pressure sensor مثال على sensor يحول تغير ______ إلى إشارة كهربائية.",
+        accepted: ["pressure", "الضغط", "ضغط"],
+        displayAnswer: "pressure / الضغط",
+        explanation: "pressure sensor يقيس الضغط ويعطي output كهربائي مناسب."
+      },
+      {
+        id: "q20",
+        type: "essay",
+        category: "رسم ومقال",
+        prompt: "Describe with sketch: Elastic sensor.",
+        displayAnswer: "العنصر المرن مثل diaphragm أو bellows أو Bourdon tube يتشوه عند تأثير pressure/force. هذا التشوه يتحول إلى displacement، ثم يمكن قياسه بمؤشر أو transducer. في الرسم: pressure يدخل على elastic element، ينتج movement، ثم output indication/electrical signal.",
+        explanation: "ركز في الإجابة على: elastic element، deformation، displacement، وطريقة تحويل الحركة إلى إشارة."
+      },
+      {
+        id: "q21",
+        type: "essay",
+        category: "رسم ومقال",
+        prompt: "How to use Bourdon tube into an ON-OFF controller?",
+        displayAnswer: "يوصل الضغط إلى Bourdon tube. عندما يزيد الضغط يتمدد الأنبوب ويحرك linkage أو pointer. هذه الحركة تضغط micro-switch عند setpoint محدد فتشغل أو توقف compressor/pump/valve. يمكن إضافة deadband حتى لا يحدث switching سريع حول نقطة الضبط.",
+        explanation: "الكلمات المهمة: pressure, Bourdon movement, setpoint, micro-switch, ON/OFF, deadband."
+      },
+      {
+        id: "q22",
+        type: "essay",
+        category: "رسم ومقال",
+        prompt: "Describe how to control marine air vessel.",
+        displayAnswer: "يُقاس ضغط air vessel بواسطة pressure sensor أو pressure switch. يقارن controller الضغط مع setpoint. إذا انخفض الضغط عن الحد الأدنى يعمل compressor أو يفتح valve، وإذا وصل للحد الأعلى يتوقف. يضاف safety relief valve و alarm للحماية.",
+        explanation: "ارسم حلقة مغلقة: vessel pressure -> sensor -> controller -> compressor/valve -> vessel."
+      },
+      {
+        id: "q23",
+        type: "essay",
+        category: "رسم ومقال",
+        prompt: "LVDT: how to convert pressure P into voltage?",
+        displayAnswer: "يؤثر الضغط على diaphragm أو bellows فينتج displacement. هذه الحركة تنقل core داخل LVDT. مع excitation AC للملف الابتدائي، يتغير فرق الجهد بين الملفين الثانويين، وبعد signal conditioning نحصل على voltage proportional to pressure.",
+        explanation: "ارسم: pressure -> diaphragm -> core displacement -> LVDT -> AC output -> rectifier/filter -> voltage."
+      },
+      {
+        id: "q24",
+        type: "essay",
+        category: "رسم ومقال",
+        prompt: "Describe a method to control boiler feed water level.",
+        displayAnswer: "يُقاس مستوى الماء في boiler drum بواسطة level sensor/transmitter. يقارن controller المستوى مع setpoint. إذا انخفض المستوى يفتح feed-water valve أو يزيد pump speed، وإذا ارتفع يقلل التدفق. يفضل وجود alarms للـ low/high level.",
+        explanation: "حلقة مغلقة: level sensor -> controller -> valve/pump -> boiler level."
+      },
+      {
+        id: "q25",
+        type: "essay",
+        category: "رسم ومقال",
+        prompt: "ارسم closed-loop block diagram وسم العناصر الأساسية.",
+        displayAnswer: "العناصر: reference input، summing/error detector، controller، actuator، plant/process، output، sensor/feedback element، feedback signal returning to summing point.",
+        explanation: "اكتب على الأسهم: R(s), E(s), control signal, C(s), B(s)."
+      },
+      {
+        id: "q26",
+        type: "mcq",
+        category: "Feedback",
+        prompt: "لماذا negative feedback شائع في الصناعة؟",
+        options: [
+          "لأنه يحسن الاستقرار والدقة ويقلل تأثير الاضطرابات",
+          "لأنه يلغي الحاجة للحساسات",
+          "لأنه يجعل النظام open loop",
+          "لأنه دائمًا أرخص من أي نظام آخر"
+        ],
+        answer: 0,
+        explanation: "negative feedback يضبط الخرج بناءً على القياس، لذلك هو شائع في التحكم والتنظيم الآلي."
+      },
+      {
+        id: "q27",
+        type: "fill",
+        category: "Transfer Function",
+        prompt: "أكمل الفراغ: في series/cascade connection، G_eq = G1 × G2 × ______.",
+        accepted: ["g3", "G3"],
+        displayAnswer: "G3",
+        explanation: "كل بلوك في السلسلة يضرب في الذي بعده."
+      },
+      {
+        id: "q28",
+        type: "fill",
+        category: "Transfer Function",
+        prompt: "أكمل الفراغ: في parallel connection، إذا كانت الإشارتان تدخلان على summing junction بإشارة + فإن G_eq = G1 ______ G2.",
+        accepted: ["+", "plus", "زائد", "جمع", "add"],
+        displayAnswer: "G1 + G2",
+        explanation: "الفروع المتوازية تجمع جبريًا حسب علامات summing junction."
+      }
+    ];
+
+    quizBank.push(
+      {
+        id: "hw1_q1",
+        type: "essay",
+        category: "HW",
+        prompt: "HW1: Describe with aid of sketch the main components of a closed-loop automatic control system.",
+        displayAnswer: "ارسم reference input يدخل إلى summing point، ثم error signal إلى controller، ثم actuator، ثم plant/process، ثم output. من الخرج يوجد sensor/feedback element يرجع feedback signal إلى نقطة المقارنة. اذكر أن الهدف هو جعل output قريبًا من setpoint وتقليل error.",
+        explanation: "العناصر الأساسية: reference, comparator/error detector, controller, actuator, plant, sensor/feedback, output."
+      },
+      {
+        id: "hw1_q2",
+        type: "essay",
+        category: "HW",
+        prompt: "HW1: Identify the different types of signals and the function of each component.",
+        displayAnswer: "الإشارات: reference input أو setpoint، feedback signal من الحساس، error signal = reference - feedback، control signal من controller، actuating signal للمشغل، output/controlled variable. وظيفة controller معالجة الخطأ، actuator تنفيذ الأمر، plant العملية المراد التحكم بها، sensor قياس الخرج وإرساله كـ feedback.",
+        explanation: "اربط كل إشارة بسهمها في الرسم: R(s), E(s), control signal, C(s), B(s)."
+      },
+      {
+        id: "hw1_q3",
+        type: "essay",
+        category: "HW",
+        prompt: "HW1: Compare with sketch between open-loop and closed-loop control systems.",
+        displayAnswer: "Open loop: input -> controller -> plant -> output ولا يوجد feedback، بسيط ورخيص لكن أقل دقة ولا يصحح disturbance. Closed loop: output يقاس بواسطة sensor ويرجع للمقارنة مع input، أدق وأكثر استقرارًا ضد الاضطرابات لكنه أكثر تعقيدًا وكلفة.",
+        explanation: "في الرسم أظهر open loop كسلسلة واحدة، وclosed loop كحلقة راجعة من output إلى summing point."
+      },
+      {
+        id: "hw1_q4",
+        type: "essay",
+        category: "HW",
+        prompt: "HW1: What are the equations of negative and positive feedback?",
+        displayAnswer: "Negative feedback: E(s)=R(s)-B(s), B(s)=H(s)C(s), and C(s)/R(s)=G(s)/(1+G(s)H(s)). Positive feedback: E(s)=R(s)+B(s), and C(s)/R(s)=G(s)/(1-G(s)H(s)).",
+        explanation: "انتبه لإشارة المقام: negative فيها +GH، وpositive فيها -GH."
+      },
+      {
+        id: "hw3_q1",
+        type: "essay",
+        category: "HW",
+        prompt: "HW3: Describe with aid of sketch the different types of temperature sensors.",
+        displayAnswer: "Thermocouple: وصلتان من معدنين مختلفين تولد voltage عند اختلاف الحرارة. RTD: مقاومة معدنية تزداد غالبًا مع الحرارة. Thermistor: مقاومة شبه موصلة تتغير بقوة مع الحرارة. Bimetallic strip: شريطان معدنيان يتمددان بشكل مختلف فيسببان انحناء وحركة مؤشر أو switch. Liquid-in-glass: تمدد السائل داخل أنبوب مدرج.",
+        explanation: "في الرسم يكفي رسم شكل مبسط لكل نوع مع سهم temperature وoutput: voltage/resistance/movement."
+      },
+      {
+        id: "hw3_q2",
+        type: "numeric",
+        category: "HW",
+        prompt: "HW3: Tank height = 3 m, ultrasonic reflection time = 3x10^-3 s, speed of sound = 340 m/s. احسب level of liquid.",
+        value: 2.49,
+        tolerance: 0.01,
+        displayAnswer: "2.49 m",
+        explanation: "الموجة ذهاب وعودة، إذن distance from sensor to liquid surface = v*t/2 = 340*0.003/2 = 0.51 m. Level = tank height - empty distance = 3 - 0.51 = 2.49 m."
+      },
+      {
+        id: "hw3_q2_fill",
+        type: "fill",
+        category: "HW",
+        prompt: "أكمل: في ultrasonic level sensor، المسافة بين الحساس وسطح السائل = v × t / ____.",
+        accepted: ["2", "two", "٢"],
+        displayAnswer: "2",
+        explanation: "زمن الانعكاس هو زمن رحلة الموجة ذهابًا وإيابًا، لذلك نقسم على 2."
+      },
+      {
+        id: "hw3_q3",
+        type: "essay",
+        category: "HW",
+        prompt: "HW3: Explain how photocells are used in three different marine applications.",
+        displayAnswer: "1) Flame detection في burner/boiler: photocell يرى ضوء اللهب ويعطي permissive أو trip إذا اختفى اللهب. 2) Automatic lighting: تشغيل deck/navigation lights عند انخفاض الإضاءة. 3) Photoelectric detection: كشف وجود جسم أو مرور جزء في conveyor/door/safety guard أو عد الأجسام في الأنظمة البحرية.",
+        explanation: "المطلوب ثلاث تطبيقات بحرية مع فكرة التحويل: light intensity -> electrical signal."
+      },
+      {
+        id: "temp_q_mcq",
+        type: "mcq",
+        category: "Sensors",
+        prompt: "أي حساس حرارة يعتمد على توليد جهد صغير بسبب اختلاف الحرارة بين وصلتين من معدنين مختلفين؟",
+        options: ["Thermocouple", "LVDT", "Bourdon tube", "Ultrasonic sensor"],
+        answer: 0,
+        explanation: "Thermocouple يحول فرق الحرارة إلى voltage صغير."
+      },
+      {
+        id: "photo_q_mcq",
+        type: "mcq",
+        category: "Sensors",
+        prompt: "أي تطبيق بحري مناسب للـ photocell؟",
+        options: [
+          "كشف اللهب في boiler/burner safety",
+          "تحويل الضغط إلى حركة Bourdon فقط",
+          "حساب transfer function بالتوالي",
+          "قياس مستوى الخزان بالموجات فوق الصوتية"
+        ],
+        answer: 0,
+        explanation: "Photocell يقيس الضوء، لذلك يستخدم في flame detection أو automatic lighting."
+      }
+    );
+
+    const englishQuestionText = {
+      q1: "What is the function of a sensor in a control system?",
+      q2: "Which item is an example of a plant in a control system?",
+      q3: "Fill in the blank: In a closed-loop system, the actual output is compared with the ______.",
+      q4: "What is the main characteristic of an open-loop control system?",
+      q5: "Which statement best describes negative feedback?",
+      q6: "Fill in the blank: Positive feedback usually makes oscillations more ______.",
+      q7: "Series connection: If G1 = 4 and G2 = 5, calculate G_eq.",
+      q8: "Parallel connection: If G1 = 10 and G2 = 6, calculate G_eq.",
+      q9: "Fill in the blank: A transfer function is the ratio of the Laplace transform of the output to the ______.",
+      q10: "What is the closed-loop transfer function for negative feedback?",
+      q11: "What is the closed-loop transfer function for positive feedback?",
+      q12: "Negative feedback: If G = 10 and H = 0.5, calculate C(s)/R(s).",
+      q13: "Positive feedback: If G = 10 and H = 0.5, calculate C(s)/R(s).",
+      q14: "Fill in the blank: error signal = reference input - ______ signal.",
+      q15: "If R = 12 and feedback signal B = 9, what is the error signal?",
+      q16: "What is the function of an actuator?",
+      q17: "Fill in the blank: Types of actuators by power include hydraulic, pneumatic, electrical, magnetic, and ______.",
+      q18: "Which list represents the main components of a control system?",
+      q19: "Fill in the blank: A pressure sensor converts a change in ______ into an electrical signal.",
+      q25: "Draw a closed-loop block diagram and label the main elements.",
+      q26: "Why is negative feedback common in industry?",
+      q27: "Fill in the blank: In a series/cascade connection, G_eq = G1 × G2 × ______.",
+      q28: "Fill in the blank: In a parallel connection with positive summing, G_eq = G1 ______ G2.",
+      hw3_q2: "HW3: Tank height = 3 m, ultrasonic reflection time = 3x10^-3 s, speed of sound = 340 m/s. Calculate the liquid level.",
+      hw3_q2_fill: "Fill in the blank: In an ultrasonic level sensor, distance from the sensor to the liquid surface = v × t / ____.",
+      temp_q_mcq: "Which temperature sensor generates a small voltage because of a temperature difference between two junctions made of different metals?",
+      photo_q_mcq: "Which marine application is suitable for a photocell?"
+    };
+
+    const englishOptions = {
+      q1: ["Converts a physical change into an electrical signal", "Only amplifies the output", "Removes the need for a controller", "Stores mechanical energy"],
+      q2: ["Boiler", "Keyboard", "Spreadsheet", "Battery only"],
+      q4: ["It does not use feedback to correct the output", "It is always more accurate than closed loop", "It always depends on a sensor", "It has no controller"],
+      q5: ["The feedback signal is subtracted from the input and usually improves stability", "The feedback signal is always added and reduces accuracy", "It has no relation to stability", "It is used only in manual systems"],
+      q16: ["Converts a control signal into a physical action", "Measures pressure only", "Stores the setpoint", "Calculates the Laplace transform"],
+      q18: ["Plant, sensors, controllers, actuators, feedback", "Keyboard, monitor, mouse, printer", "Only plant and output", "Only input and battery"],
+      q26: ["Because it improves stability and accuracy and reduces disturbance effects", "Because it removes the need for sensors", "Because it makes the system open loop", "Because it is always cheaper than any other system"],
+      photo_q_mcq: ["Flame detection in boiler/burner safety", "Only converting pressure into Bourdon movement", "Calculating a series transfer function", "Measuring tank level by ultrasonic waves"]
+    };
+
+    const englishModelAnswers = {
+      q1: "A sensor or transducer converts a physical variable such as pressure, temperature, light, or motion into an electrical signal.",
+      q2: "Boiler. The plant is the physical process or device that needs to be controlled.",
+      q3: "setpoint / reference",
+      q4: "The controller action is independent of the output because no feedback is used.",
+      q5: "In negative feedback, the feedback signal is subtracted from the input. It usually improves stability and accuracy.",
+      q6: "more likely",
+      q7: "G_eq = G1 × G2 = 4 × 5 = 20.",
+      q8: "G_eq = G1 + G2 = 10 + 6 = 16.",
+      q9: "input",
+      q10: "C(s)/R(s) = G(s) / [1 + G(s)H(s)].",
+      q11: "C(s)/R(s) = G(s) / [1 - G(s)H(s)].",
+      q12: "T = G/(1+GH) = 10/(1+10×0.5) = 10/6 = 1.67 approximately.",
+      q13: "T = G/(1-GH) = 10/(1-10×0.5) = 10/(1-5) = -2.5.",
+      q14: "feedback",
+      q15: "E = R - B = 12 - 9 = 3.",
+      q16: "An actuator converts the controller output signal into a physical action such as opening a valve or moving a motor.",
+      q17: "mechanical",
+      q18: "Plant, sensors, controllers, actuators, and feedback.",
+      q19: "pressure",
+      q20: "An elastic pressure sensor uses an elastic element such as a diaphragm, bellows, or Bourdon tube. Pressure causes deformation; the deformation produces displacement; the displacement is indicated mechanically or converted into an electrical signal.",
+      q21: "Pressure enters the Bourdon tube. The tube deflects and moves a linkage or pointer. At a selected setpoint, this movement operates a micro-switch to turn a pump, compressor, alarm, or valve ON or OFF. A deadband can be added to prevent rapid switching.",
+      q22: "Measure the air-vessel pressure using a pressure sensor or pressure switch. Compare it with the setpoint in a controller. If pressure is low, start the compressor or open the valve; if pressure reaches the high limit, stop it. Add safety relief and alarm protection.",
+      q23: "Pressure acts on a diaphragm or bellows and creates displacement. This displacement moves the core of the LVDT. With AC excitation, the secondary coils produce a differential voltage. After signal conditioning, the output voltage becomes proportional to pressure.",
+      q24: "Measure boiler drum level with a level transmitter. Compare the measured level with the setpoint. If the level is low, open the feed-water valve or increase pump speed; if it is high, reduce flow. Add low-level and high-level alarms.",
+      q25: "The diagram should include reference input, summing/error detector, controller, actuator, plant/process, output, sensor or feedback element, and a feedback signal returning to the summing point.",
+      q26: "Negative feedback is common because it improves stability and accuracy and reduces the effect of disturbances.",
+      q27: "G3",
+      q28: "+",
+      hw1_q1: "A closed-loop automatic control system contains a reference input, comparator/error detector, controller, actuator, plant/process, output, and sensor/feedback element. The output is measured and fed back to be compared with the reference so the controller can reduce the error.",
+      hw1_q2: "Signals include reference input or setpoint, feedback signal, error signal, controller output/control signal, actuating signal, and controlled output. The controller processes error, the actuator performs the action, the plant is the controlled process, and the sensor measures the output.",
+      hw1_q3: "Open loop: input -> controller -> plant -> output, with no feedback, simple but less accurate. Closed loop: output is measured by a sensor and fed back to the comparator, more accurate and better against disturbances but more complex.",
+      hw1_q4: "Negative feedback: E(s)=R(s)-B(s), B(s)=H(s)C(s), C(s)/R(s)=G(s)/(1+G(s)H(s)). Positive feedback: E(s)=R(s)+B(s), C(s)/R(s)=G(s)/(1-G(s)H(s)).",
+      hw3_q1: "Temperature sensors include thermocouples, RTDs, thermistors, bimetallic strips, and liquid-in-glass thermometers. A thermocouple produces voltage, RTD and thermistor change resistance, bimetallic strips bend, and liquid-in-glass sensors show expansion.",
+      hw3_q2: "Distance from sensor to liquid surface = v*t/2 = 340*0.003/2 = 0.51 m. Liquid level = tank height - empty distance = 3 - 0.51 = 2.49 m.",
+      hw3_q2_fill: "2",
+      hw3_q3: "Photocells can be used for flame detection in boiler/burner safety, automatic deck or navigation lighting based on ambient light, and photoelectric detection/counting or safety barriers for marine equipment.",
+      temp_q_mcq: "Thermocouple.",
+      photo_q_mcq: "Flame detection in boiler/burner safety."
+    };
+
+    quizBank.forEach(q => {
+      if (englishQuestionText[q.id]) q.promptEn = englishQuestionText[q.id];
+      if (englishOptions[q.id]) q.optionsEn = englishOptions[q.id];
+      if (englishModelAnswers[q.id]) q.answerEn = englishModelAnswers[q.id];
+    });
+
+    const drawPrompts = quizBank.filter(q => q.type === "essay");
+
+    let currentView = "review";
+    let currentCategory = "الكل";
+    let practiceQuestions = [...quizBank];
+    let practiceIndex = 0;
+    let examQuestions = [];
+    let examIndex = 0;
+    let examAnswers = {};
+    let examSubmitted = false;
+    const scratchCanvases = {};
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function getPrompt(q) {
+      return q.promptEn || q.prompt;
+    }
+
+    function getOptions(q) {
+      return q.optionsEn || q.options || [];
+    }
+
+    function getModelAnswer(q) {
+      return q.answerEn || q.displayAnswer || (q.options ? getOptions(q)[q.answer] : "");
+    }
+
+    function answerHtml(q) {
+      const model = getModelAnswer(q);
+      const parts = [`<strong>Model answer:</strong><span dir="ltr">${escapeHtml(model)}</span>`];
+      if (q.displayAnswer && q.displayAnswer !== model) {
+        parts.push(`<strong>بالعربي:</strong><span>${escapeHtml(q.displayAnswer)}</span>`);
+      }
+      if (q.explanation) {
+        parts.push(`<strong>شرح بالعربي:</strong><span class="muted">${escapeHtml(q.explanation)}</span>`);
+      }
+      return parts.join("");
+    }
+
+    function normalizeAnswer(value) {
+      return String(value || "")
+        .toLowerCase()
+        .replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d))
+        .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+        .replace(/[ًٌٍَُِّْ]/g, "")
+        .replace(/[^\p{L}\p{N}+\-.]+/gu, "")
+        .trim();
+    }
+
+    function shuffle(array) {
+      const out = [...array];
+      for (let i = out.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [out[i], out[j]] = [out[j], out[i]];
+      }
+      return out;
+    }
+
+    function isGradable(q) {
+      return ["mcq", "fill", "numeric"].includes(q.type);
+    }
+
+    function checkQuestion(q, value) {
+      if (q.type === "mcq") {
+        return Number(value) === q.answer;
+      }
+      if (q.type === "numeric") {
+        const num = Number(value);
+        return Number.isFinite(num) && Math.abs(num - q.value) <= q.tolerance;
+      }
+      if (q.type === "fill") {
+        const answer = normalizeAnswer(value);
+        return q.accepted.some(item => {
+          const accepted = normalizeAnswer(item);
+          return answer === accepted || answer.includes(accepted) || accepted.includes(answer);
+        });
+      }
+      return null;
+    }
+
+    function getUserAnswer(root, q) {
+      if (!root) return "";
+      if (q.type === "mcq") {
+        const checked = root.querySelector(`input[name="${q.id}"]:checked`);
+        return checked ? checked.value : "";
+      }
+      const field = root.querySelector(`[data-answer-for="${q.id}"]`);
+      return field ? field.value : "";
+    }
+
+    function setUserAnswer(root, q, value) {
+      if (!root || value === undefined) return;
+      if (q.type === "mcq") {
+        const option = root.querySelector(`input[name="${q.id}"][value="${value}"]`);
+        if (option) option.checked = true;
+      } else {
+        const field = root.querySelector(`[data-answer-for="${q.id}"]`);
+        if (field) field.value = value;
+      }
+    }
+
+    function questionTypeLabel(type) {
+      return {
+        mcq: "اختيار",
+        fill: "أكمل الفراغ",
+        numeric: "حساب",
+        essay: "مقال ورسم"
+      }[type] || type;
+    }
+
+    function renderQuestion(q, context, savedAnswer = "") {
+      const disabled = context === "examReview";
+      const showAnswer = context === "examReview";
+      let inputHtml = "";
+      if (q.type === "mcq") {
+        inputHtml = `<div class="options">${getOptions(q).map((opt, idx) => `
+          <label class="option">
+            <input type="radio" name="${q.id}" value="${idx}" ${disabled ? "disabled" : ""}>
+            <span>${escapeHtml(opt)}</span>
+          </label>`).join("")}</div>`;
+      } else if (q.type === "fill" || q.type === "numeric") {
+        const type = q.type === "numeric" ? "number" : "text";
+        inputHtml = `<input type="${type}" step="any" data-answer-for="${q.id}" placeholder="اكتب الإجابة هنا" ${disabled ? "disabled" : ""}>`;
+      } else {
+        inputHtml = `<textarea data-answer-for="${q.id}" placeholder="اكتب إجابتك أو نقاط الرسم هنا" ${disabled ? "disabled" : ""}></textarea>`;
+      }
+
+      const controls = context === "practice" ? `
+        <div class="row-controls">
+          ${isGradable(q) ? `<button class="primary-btn" data-action="check">${icons.check} تحقق</button>` : ""}
+          <button class="soft-btn" data-action="reveal">${icons.eye} إظهار الحل</button>
+          <button class="soft-btn" data-action="reset">${icons.refresh} إعادة</button>
+        </div>` : "";
+
+      const answerBlock = showAnswer ? `
+        <div class="feedback-box show ${isGradable(q) && checkQuestion(q, savedAnswer) ? "correct" : isGradable(q) ? "wrong" : ""}">
+          <div class="answer-key">${answerHtml(q)}</div>
+        </div>` : `<div class="feedback-box" data-feedback></div>`;
+
+      const html = `
+        <div class="question-meta">
+          <span class="tag teal">${escapeHtml(q.category)}</span>
+          <span class="tag amber">${questionTypeLabel(q.type)}</span>
+        </div>
+        <p class="question-prompt" dir="ltr">${escapeHtml(getPrompt(q))}</p>
+        ${inputHtml}
+        ${controls}
+        ${answerBlock}
+      `;
+
+      return html;
+    }
+
+    function attachPracticeHandlers(q) {
+      const panel = document.getElementById("practicePanel");
+      setUserAnswer(panel, q, localStorage.getItem(`practice:${q.id}`) || "");
+      panel.querySelectorAll("input, textarea").forEach(el => {
+        el.addEventListener("input", () => localStorage.setItem(`practice:${q.id}`, getUserAnswer(panel, q)));
+        el.addEventListener("change", () => localStorage.setItem(`practice:${q.id}`, getUserAnswer(panel, q)));
+      });
+      panel.querySelectorAll("[data-action]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const action = btn.dataset.action;
+          const box = panel.querySelector("[data-feedback]");
+          if (action === "reset") {
+            localStorage.removeItem(`practice:${q.id}`);
+            renderPractice();
+            return;
+          }
+          if (action === "check") {
+            const ok = checkQuestion(q, getUserAnswer(panel, q));
+            box.className = `feedback-box show ${ok ? "correct" : "wrong"}`;
+            box.innerHTML = ok
+              ? `<strong>صحيح.</strong><div class="muted">${escapeHtml(q.explanation)}</div>`
+              : `<strong>راجع الإجابة.</strong><div class="answer-key">${answerHtml(q)}</div>`;
+          }
+          if (action === "reveal") {
+            box.className = "feedback-box show";
+            box.innerHTML = `<div class="answer-key">${answerHtml(q)}</div>`;
+          }
+        });
+      });
+    }
+
+    function renderStats() {
+      const stats = [
+        { value: reviewCards.length, label: "بطاقة" },
+        { value: quizBank.length, label: "سؤال" },
+        { value: quizBank.filter(q => q.type === "fill").length, label: "فراغ" },
+        { value: drawPrompts.length, label: "رسم/مقال" }
+      ];
+      document.getElementById("quickStats").innerHTML = stats.map(s => `
+        <div class="stat-box">
+          <span class="stat-value">${s.value}</span>
+          <span class="stat-label">${s.label}</span>
+        </div>`).join("");
+    }
+
+    function renderTopicFilter() {
+      const filter = document.getElementById("topicFilter");
+      filter.innerHTML = categories.map(cat => `<button class="chip ${cat === currentCategory ? "active" : ""}" data-category="${cat}">${cat}</button>`).join("");
+      filter.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          currentCategory = btn.dataset.category;
+          renderTopicFilter();
+          renderReviewCards();
+        });
+      });
+    }
+
+    function renderReviewCards() {
+      const cards = currentCategory === "الكل"
+        ? reviewCards
+        : reviewCards.filter(card => card.category === currentCategory);
+      const grid = document.getElementById("reviewGrid");
+      grid.innerHTML = cards.map(card => `
+        <article class="review-card">
+          <div class="tag-row">
+            <span class="tag teal">${escapeHtml(card.category)}</span>
+            ${card.tags.map((tag, index) => `<span class="tag ${index % 2 ? "rose" : "amber"}">${escapeHtml(tag)}</span>`).join("")}
+          </div>
+          <h3>${escapeHtml(card.title)}</h3>
+          <ul class="card-list">${card.body.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+          <div class="formula">${escapeHtml(card.formula)}</div>
+        </article>`).join("");
+    }
+
+    function diagramSvg(type) {
+      const common = `font-family="Arial, sans-serif" font-size="13"`;
+      if (type === "series") {
+        return `<svg viewBox="0 0 420 160" role="img" aria-label="series connection">
+          <defs><marker id="arrS" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1d2430"/></marker></defs>
+          <line x1="24" y1="80" x2="80" y2="80" stroke="#1d2430" stroke-width="2" marker-end="url(#arrS)"/>
+          <rect x="80" y="50" width="75" height="60" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="117" y="85" text-anchor="middle" ${common}>G1(s)</text>
+          <line x1="155" y1="80" x2="210" y2="80" stroke="#1d2430" stroke-width="2" marker-end="url(#arrS)"/>
+          <rect x="210" y="50" width="75" height="60" fill="#fff" stroke="#3949ab" stroke-width="2"/><text x="247" y="85" text-anchor="middle" ${common}>G2(s)</text>
+          <line x1="285" y1="80" x2="340" y2="80" stroke="#1d2430" stroke-width="2" marker-end="url(#arrS)"/>
+          <rect x="340" y="50" width="58" height="60" fill="#fff" stroke="#b7791f" stroke-width="2"/><text x="369" y="85" text-anchor="middle" ${common}>G3</text>
+          <text x="30" y="68" ${common}>R(s)</text><text x="368" y="130" ${common}>G_eq = G1 G2 G3</text>
+        </svg>`;
+      }
+      if (type === "parallel") {
+        return `<svg viewBox="0 0 420 180" role="img" aria-label="parallel connection">
+          <defs><marker id="arrP" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1d2430"/></marker></defs>
+          <line x1="22" y1="90" x2="90" y2="90" stroke="#1d2430" stroke-width="2"/>
+          <circle cx="90" cy="90" r="4" fill="#1d2430"/>
+          <path d="M90 90 L90 45 L135 45" stroke="#1d2430" stroke-width="2" fill="none" marker-end="url(#arrP)"/>
+          <path d="M90 90 L90 135 L135 135" stroke="#1d2430" stroke-width="2" fill="none" marker-end="url(#arrP)"/>
+          <rect x="135" y="18" width="92" height="54" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="181" y="50" text-anchor="middle" ${common}>G1(s)</text>
+          <rect x="135" y="108" width="92" height="54" fill="#fff" stroke="#3949ab" stroke-width="2"/><text x="181" y="140" text-anchor="middle" ${common}>G2(s)</text>
+          <path d="M227 45 L300 45 L300 82" stroke="#1d2430" stroke-width="2" fill="none"/>
+          <path d="M227 135 L300 135 L300 98" stroke="#1d2430" stroke-width="2" fill="none"/>
+          <circle cx="300" cy="90" r="18" fill="#fff" stroke="#b4235a" stroke-width="2"/><text x="300" y="96" text-anchor="middle" font-size="20" fill="#b4235a">+</text>
+          <line x1="318" y1="90" x2="390" y2="90" stroke="#1d2430" stroke-width="2" marker-end="url(#arrP)"/>
+          <text x="28" y="78" ${common}>R(s)</text><text x="286" y="168" ${common}>G_eq = G1 + G2</text>
+        </svg>`;
+      }
+      return `<svg viewBox="0 0 460 220" role="img" aria-label="feedback connection">
+        <defs><marker id="arrF" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1d2430"/></marker></defs>
+        <line x1="22" y1="80" x2="78" y2="80" stroke="#1d2430" stroke-width="2" marker-end="url(#arrF)"/><text x="25" y="66" ${common}>R(s)</text>
+        <circle cx="100" cy="80" r="22" fill="#fff" stroke="#b4235a" stroke-width="2"/><text x="100" y="74" text-anchor="middle" font-size="16">+</text><text x="100" y="93" text-anchor="middle" font-size="16">-</text>
+        <line x1="122" y1="80" x2="180" y2="80" stroke="#1d2430" stroke-width="2" marker-end="url(#arrF)"/><text x="140" y="68" ${common}>E(s)</text>
+        <rect x="180" y="46" width="90" height="68" fill="#fff" stroke="#0f766e" stroke-width="2"/><text x="225" y="86" text-anchor="middle" ${common}>G(s)</text>
+        <line x1="270" y1="80" x2="390" y2="80" stroke="#1d2430" stroke-width="2" marker-end="url(#arrF)"/><text x="370" y="66" ${common}>C(s)</text>
+        <circle cx="330" cy="80" r="4" fill="#1d2430"/>
+        <path d="M330 80 L330 165 L230 165" stroke="#1d2430" stroke-width="2" fill="none" marker-end="url(#arrF)"/>
+        <rect x="140" y="135" width="90" height="60" fill="#fff" stroke="#3949ab" stroke-width="2"/><text x="185" y="170" text-anchor="middle" ${common}>H(s)</text>
+        <path d="M140 165 L100 165 L100 102" stroke="#1d2430" stroke-width="2" fill="none" marker-end="url(#arrF)"/>
+        <text x="292" y="202" ${common}>T(s) = G / (1 + GH)</text>
+      </svg>`;
+    }
+
+    function renderDiagrams() {
+      const diagrams = [
+        { title: "Series", type: "series", formula: "Multiply gains" },
+        { title: "Parallel", type: "parallel", formula: "Add branches" },
+        { title: "Negative feedback", type: "feedback", formula: "G / (1 + GH)" }
+      ];
+      document.getElementById("diagramStrip").innerHTML = diagrams.map(d => `
+        <article class="diagram-card">
+          <h3>${d.title}</h3>
+          ${diagramSvg(d.type)}
+          <div class="formula">${d.formula}</div>
+        </article>`).join("");
+    }
+
+    function renderManualQuestions() {
+      document.getElementById("manualQuestions").innerHTML = manualQuestions.map((q, i) => `
+        <article class="manual-item">
+          <strong>${i + 1}</strong>
+          <b>${escapeHtml(q.title)}</b>
+          <span class="muted">${escapeHtml(q.text)}</span>
+        </article>`).join("");
+    }
+
+    function renderHomeworkQuestions() {
+      document.getElementById("homeworkList").innerHTML = homeworkAssignments.map(hw => `
+        <article class="review-card">
+          <div class="tag-row">
+            <span class="tag rose">واجب</span>
+            <span class="tag teal">${escapeHtml(hw.title.split(" - ")[0])}</span>
+          </div>
+          <h3>${escapeHtml(hw.title)}</h3>
+          <ol class="card-list">${hw.questions.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ol>
+        </article>`).join("");
+    }
+
+    function renderPracticeFilter() {
+      const filter = document.getElementById("practiceFilter");
+      filter.innerHTML = categories.map(cat => `<option value="${cat}">${cat}</option>`).join("");
+      filter.value = "الكل";
+      filter.addEventListener("change", () => {
+        const cat = filter.value;
+        practiceQuestions = cat === "الكل" ? [...quizBank] : quizBank.filter(q => q.category === cat);
+        practiceIndex = 0;
+        renderPractice();
+      });
+    }
+
+    function renderPractice() {
+      const panel = document.getElementById("practicePanel");
+      if (!practiceQuestions.length) {
+        panel.innerHTML = `<div class="empty-state">لا توجد أسئلة في هذا القسم.</div>`;
+        return;
+      }
+      const q = practiceQuestions[practiceIndex];
+      panel.innerHTML = `
+        <div class="question-meta">
+          <span>السؤال ${practiceIndex + 1} من ${practiceQuestions.length}</span>
+          <span>${Math.round(((practiceIndex + 1) / practiceQuestions.length) * 100)}%</span>
+        </div>
+        ${renderQuestion(q, "practice")}
+      `;
+      const progress = ((practiceIndex + 1) / practiceQuestions.length) * 100;
+      document.getElementById("practiceProgress").style.width = `${progress}%`;
+      attachPracticeHandlers(q);
+      mountCanvas("practice", `practice-draw:${q.id}`);
+    }
+
+    function renderExamStats() {
+      const gradableCount = examQuestions.filter(isGradable).length;
+      const answered = examQuestions.filter(q => String(examAnswers[q.id] || "").trim() !== "").length;
+      document.getElementById("examStats").innerHTML = [
+        { value: examQuestions.length || 0, label: "أسئلة" },
+        { value: gradableCount || 0, label: "تصحيح آلي" },
+        { value: answered || 0, label: "مجابة" },
+        { value: examQuestions.filter(q => q.type === "essay").length || 0, label: "مقالية" }
+      ].map(s => `<div class="stat-box"><span class="stat-value">${s.value}</span><span class="stat-label">${s.label}</span></div>`).join("");
+      const progress = examQuestions.length ? ((examIndex + 1) / examQuestions.length) * 100 : 0;
+      document.getElementById("examProgress").style.width = `${progress}%`;
+    }
+
+    function startExam() {
+      const countValue = document.getElementById("examCount").value;
+      const count = countValue === "all" ? quizBank.length : Number(countValue);
+      examQuestions = shuffle(quizBank).slice(0, count);
+      examAnswers = {};
+      examIndex = 0;
+      examSubmitted = false;
+      document.getElementById("examWorkspace").classList.remove("hidden");
+      document.getElementById("examResult").classList.remove("show");
+      renderExam();
+    }
+
+    function saveExamCurrentAnswer() {
+      if (!examQuestions.length || examSubmitted) return;
+      const q = examQuestions[examIndex];
+      const panel = document.getElementById("examPanel");
+      examAnswers[q.id] = getUserAnswer(panel, q);
+      renderExamStats();
+    }
+
+    function renderExam() {
+      if (!examQuestions.length) {
+        renderExamStats();
+        return;
+      }
+      const q = examQuestions[examIndex];
+      const panel = document.getElementById("examPanel");
+      panel.innerHTML = `
+        <div class="question-meta">
+          <span>السؤال ${examIndex + 1} من ${examQuestions.length}</span>
+          <span>${questionTypeLabel(q.type)}</span>
+        </div>
+        ${renderQuestion(q, examSubmitted ? "examReview" : "exam", examAnswers[q.id])}
+      `;
+      setUserAnswer(panel, q, examAnswers[q.id] || "");
+      panel.querySelectorAll("input, textarea").forEach(el => {
+        el.addEventListener("input", saveExamCurrentAnswer);
+        el.addEventListener("change", saveExamCurrentAnswer);
+      });
+      mountCanvas("exam", `exam-draw:${q.id}`);
+      renderExamStats();
+    }
+
+    function submitExam() {
+      if (!examQuestions.length) return;
+      saveExamCurrentAnswer();
+      examSubmitted = true;
+      const gradable = examQuestions.filter(isGradable);
+      const correct = gradable.filter(q => checkQuestion(q, examAnswers[q.id])).length;
+      const percent = gradable.length ? Math.round((correct / gradable.length) * 100) : 0;
+      const result = document.getElementById("examResult");
+      result.classList.add("show");
+      result.style.setProperty("--score-deg", `${percent * 3.6}deg`);
+      result.innerHTML = `
+        <div class="row-controls">
+          <div class="score-ring"><strong>${percent}%</strong></div>
+          <div>
+            <h2 class="section-title">النتيجة: ${correct} من ${gradable.length}</h2>
+            <p class="muted">الأسئلة المقالية والرسمية تحتاج مقارنة ذاتية مع النموذج.</p>
+          </div>
+        </div>
+        <div class="review-answer-list">
+          ${examQuestions.map((q, i) => {
+            const user = examAnswers[q.id] || "";
+            const ok = isGradable(q) ? checkQuestion(q, user) : null;
+            return `<article class="review-answer-item ${ok === true ? "good" : ok === false ? "bad" : ""}">
+              <strong dir="ltr">${i + 1}. ${escapeHtml(getPrompt(q))}</strong>
+              <div class="muted">إجابتك: ${escapeHtml(user || "بدون إجابة")}</div>
+              <div class="answer-key">${answerHtml(q)}</div>
+            </article>`;
+          }).join("")}
+        </div>
+      `;
+      renderExam();
+      result.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderDrawPrompts() {
+      const select = document.getElementById("drawPromptSelect");
+      select.innerHTML = drawPrompts.map(q => `<option value="${q.id}">${escapeHtml(getPrompt(q))}</option>`).join("");
+      select.addEventListener("change", renderDrawPrompt);
+      document.getElementById("showDrawModelBtn").addEventListener("click", () => {
+        const q = drawPrompts.find(item => item.id === select.value);
+        const box = document.getElementById("drawModelBox");
+        box.className = "feedback-box show";
+        box.innerHTML = `<div class="answer-key">${answerHtml(q)}</div>`;
+      });
+      renderDrawPrompt();
+    }
+
+    function renderDrawPrompt() {
+      const q = drawPrompts.find(item => item.id === document.getElementById("drawPromptSelect").value) || drawPrompts[0];
+      document.getElementById("drawPromptText").innerHTML = `
+        <span class="tag rose">${escapeHtml(q.category)}</span>
+        <p dir="ltr">${escapeHtml(getPrompt(q))}</p>
+      `;
+      document.getElementById("drawModelBox").className = "feedback-box";
+      mountCanvas("draw", `draw:${q.id}`);
+    }
+
+    function setupCanvasToolbar(shell, key) {
+      shell.innerHTML = `
+        <div class="canvas-toolbar">
+          <button class="icon-button" data-tool="pen" aria-label="قلم" title="قلم">${icons.pen}</button>
+          <button class="icon-button" data-tool="eraser" aria-label="ممحاة" title="ممحاة">${icons.eraser}</button>
+          <label>لون <input type="color" data-color value="#1d2430"></label>
+          <label>حجم <input type="range" data-size min="2" max="22" value="4"></label>
+          <button class="icon-button" data-clear aria-label="مسح" title="مسح">${icons.trash}</button>
+          <button class="icon-button" data-download aria-label="تحميل" title="تحميل">${icons.download}</button>
+        </div>
+        <canvas class="sketch-canvas"></canvas>
+      `;
+      initCanvas(shell, key);
+    }
+
+    function mountCanvas(shellName, key) {
+      const shell = document.querySelector(`[data-canvas-shell="${shellName}"]`);
+      if (!shell) return;
+      setupCanvasToolbar(shell, key);
+    }
+
+    function initCanvas(shell, key) {
+      const canvas = shell.querySelector("canvas");
+      const ctx = canvas.getContext("2d");
+      const color = shell.querySelector("[data-color]");
+      const size = shell.querySelector("[data-size]");
+      let drawing = false;
+      let tool = "pen";
+      let last = null;
+
+      function fitCanvas() {
+        const old = localStorage.getItem(key);
+        const rect = canvas.getBoundingClientRect();
+        const ratio = window.devicePixelRatio || 1;
+        canvas.width = Math.max(1, Math.floor(rect.width * ratio));
+        canvas.height = Math.max(1, Math.floor(rect.height * ratio));
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.fillStyle = "#fffdf8";
+        ctx.fillRect(0, 0, rect.width, rect.height);
+        if (old) {
+          const img = new Image();
+          img.onload = () => ctx.drawImage(img, 0, 0, rect.width, rect.height);
+          img.src = old;
+        }
+      }
+
+      function point(event) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top
+        };
+      }
+
+      function save() {
+        try {
+          localStorage.setItem(key, canvas.toDataURL("image/png"));
+        } catch (error) {
+          scratchCanvases[key] = canvas.toDataURL("image/png");
+        }
+      }
+
+      function strokeTo(next) {
+        if (!last) {
+          last = next;
+          return;
+        }
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = Number(size.value);
+        ctx.strokeStyle = tool === "eraser" ? "#fffdf8" : color.value;
+        ctx.beginPath();
+        ctx.moveTo(last.x, last.y);
+        ctx.lineTo(next.x, next.y);
+        ctx.stroke();
+        last = next;
+      }
+
+      shell.querySelectorAll("[data-tool]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          tool = btn.dataset.tool;
+          shell.querySelectorAll("[data-tool]").forEach(item => item.classList.remove("chip", "active"));
+          btn.classList.add("chip", "active");
+        });
+      });
+
+      shell.querySelector("[data-clear]").addEventListener("click", () => {
+        const rect = canvas.getBoundingClientRect();
+        ctx.fillStyle = "#fffdf8";
+        ctx.fillRect(0, 0, rect.width, rect.height);
+        localStorage.removeItem(key);
+      });
+
+      shell.querySelector("[data-download]").addEventListener("click", () => {
+        const link = document.createElement("a");
+        link.download = `${key.replaceAll(":", "-")}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+
+      canvas.addEventListener("pointerdown", event => {
+        drawing = true;
+        canvas.setPointerCapture(event.pointerId);
+        last = point(event);
+        strokeTo(last);
+      });
+
+      canvas.addEventListener("pointermove", event => {
+        if (!drawing) return;
+        strokeTo(point(event));
+      });
+
+      canvas.addEventListener("pointerup", event => {
+        drawing = false;
+        last = null;
+        save();
+        canvas.releasePointerCapture(event.pointerId);
+      });
+
+      canvas.addEventListener("pointercancel", () => {
+        drawing = false;
+        last = null;
+        save();
+      });
+
+      fitCanvas();
+      shell.querySelector('[data-tool="pen"]').classList.add("chip", "active");
+    }
+
+    function setupNavigation() {
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          currentView = btn.dataset.view;
+          document.querySelectorAll(".tab-btn").forEach(item => item.setAttribute("aria-selected", String(item === btn)));
+          document.querySelectorAll(".view").forEach(view => view.classList.remove("active"));
+          document.getElementById(`${currentView}View`).classList.add("active");
+          if (currentView === "practice") renderPractice();
+          if (currentView === "exam") renderExamStats();
+          if (currentView === "draw") renderDrawPrompt();
+        });
+      });
+    }
+
+    function setupControls() {
+      document.getElementById("studyNotes").value = localStorage.getItem("studyNotes") || "";
+      document.getElementById("saveNotesBtn").addEventListener("click", () => {
+        localStorage.setItem("studyNotes", document.getElementById("studyNotes").value);
+      });
+      document.getElementById("clearNotesBtn").addEventListener("click", () => {
+        document.getElementById("studyNotes").value = "";
+        localStorage.removeItem("studyNotes");
+      });
+
+      document.getElementById("prevPractice").addEventListener("click", () => {
+        practiceIndex = Math.max(0, practiceIndex - 1);
+        renderPractice();
+      });
+      document.getElementById("nextPractice").addEventListener("click", () => {
+        practiceIndex = Math.min(practiceQuestions.length - 1, practiceIndex + 1);
+        renderPractice();
+      });
+
+      document.getElementById("startExamBtn").addEventListener("click", startExam);
+      document.getElementById("prevExam").addEventListener("click", () => {
+        saveExamCurrentAnswer();
+        examIndex = Math.max(0, examIndex - 1);
+        renderExam();
+      });
+      document.getElementById("nextExam").addEventListener("click", () => {
+        saveExamCurrentAnswer();
+        examIndex = Math.min(examQuestions.length - 1, examIndex + 1);
+        renderExam();
+      });
+      document.getElementById("submitExamBtn").addEventListener("click", submitExam);
+      document.getElementById("calcBtn").addEventListener("click", calculateTransfer);
+      document.getElementById("calcType").addEventListener("change", calculateTransfer);
+    }
+
+    function calculateTransfer() {
+      const type = document.getElementById("calcType").value;
+      const g1 = Number(document.getElementById("calcG1").value);
+      const g2 = Number(document.getElementById("calcG2").value);
+      const g3Field = document.getElementById("calcG3").value;
+      const g3 = g3Field === "" ? null : Number(g3Field);
+      const out = document.getElementById("calcResult");
+      if (!Number.isFinite(g1) || !Number.isFinite(g2) || (g3 !== null && !Number.isFinite(g3))) {
+        out.textContent = "أدخل أرقام صحيحة";
+        return;
+      }
+      if (type === "series") {
+        const result = g3 === null ? g1 * g2 : g1 * g2 * g3;
+        out.textContent = g3 === null ? `G_eq = ${g1} × ${g2} = ${result}` : `G_eq = ${g1} × ${g2} × ${g3} = ${result}`;
+      }
+      if (type === "parallel") {
+        const result = g3 === null ? g1 + g2 : g1 + g2 + g3;
+        out.textContent = g3 === null ? `G_eq = ${g1} + ${g2} = ${result}` : `G_eq = ${g1} + ${g2} + ${g3} = ${result}`;
+      }
+      if (type === "negative") {
+        const denom = 1 + g1 * g2;
+        out.textContent = `T = G/(1+GH) = ${g1}/${denom} = ${(g1 / denom).toFixed(4)}`;
+      }
+      if (type === "positive") {
+        const denom = 1 - g1 * g2;
+        out.textContent = denom === 0 ? "T = G/(1-GH): المقام يساوي صفر" : `T = G/(1-GH) = ${g1}/${denom} = ${(g1 / denom).toFixed(4)}`;
+      }
+    }
+
+    function boot() {
+      renderStats();
+      renderTopicFilter();
+      renderReviewCards();
+      renderDiagrams();
+      renderManualQuestions();
+      renderHomeworkQuestions();
+      renderPracticeFilter();
+      renderPractice();
+      renderExamStats();
+      renderDrawPrompts();
+      setupNavigation();
+      setupControls();
+      calculateTransfer();
+    }
+
+    boot();
+  </script>
+</body>
+</html>
