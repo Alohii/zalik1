@@ -1194,13 +1194,6 @@
               <p class="muted">استخدمت منه أمثلة الجمع والتوازي والـ feedback مع H(s).</p>
             </div>
           </article>
-          <article class="source-panel">
-            <img src="assets/exam-review-questions.jpg" alt="صورة أسئلة مراجعة الاختبار">
-            <div>
-              <h3>أسئلة مراجعة الاختبار</h3>
-              <p class="muted">تتضمن fill-in، LVDT، capacitive level، RTD، main switchboard وcontrollable-pitch propeller.</p>
-            </div>
-          </article>
         </div>
 
         <div class="mini-panel" style="margin-top:14px;">
@@ -2063,7 +2056,7 @@
 
     quizBank.push(
       {
-        id: "exam_open_loop_fill", type: "fill", category: "Exam Review",
+        id: "exam_open_loop_fill", type: "fill", category: "Integrated Practice",
         promptEn: "Complete: A control system whose action is independent of the desired output is an ______ control system.",
         accepted: ["open loop", "open-loop", "open loop control system"],
         answerEn: "open-loop",
@@ -2071,7 +2064,7 @@
         explanation: "في open loop لا يتم قياس الخرج وإعادته لتصحيح عملية التحكم."
       },
       {
-        id: "exam_error_fill", type: "fill", category: "Exam Review",
+        id: "exam_error_fill", type: "fill", category: "Integrated Practice",
         promptEn: "Complete: The ______ signal is the difference between the reference input and the feedback signal.",
         accepted: ["error", "error signal"],
         answerEn: "error",
@@ -2079,7 +2072,7 @@
         explanation: "في negative feedback: E(s) = R(s) - B(s)."
       },
       {
-        id: "exam_positive_eq", type: "fill", category: "Exam Review",
+        id: "exam_positive_eq", type: "fill", category: "Integrated Practice",
         promptEn: "Write the closed-loop transfer-function equation for positive feedback.",
         accepted: ["g/(1-gh)", "g(s)/(1-g(s)h(s))", "g/1-gh"],
         answerEn: "C(s)/R(s) = G(s) / [1 - G(s)H(s)]",
@@ -2087,7 +2080,7 @@
         explanation: "في positive feedback تكون إشارة GH سالبة في المقام."
       },
       {
-        id: "exam_room_temp", type: "mcq", category: "Exam Review",
+        id: "exam_room_temp", type: "mcq", category: "Integrated Practice",
         promptEn: "Which controller is commonly used to control the temperature of a refrigeration room?",
         optionsEn: ["ON-OFF thermostat controller", "Derivative-only controller", "Open-loop timer only", "Reverse-power relay"],
         options: ["ON-OFF thermostat controller", "Derivative-only controller", "Open-loop timer only", "Reverse-power relay"],
@@ -2097,7 +2090,7 @@
         explanation: "Thermostat يشغل وحدة التبريد عند الحد الأعلى ويفصلها عند الحد الأدنى مع differential gap."
       },
       {
-        id: "exam_pid_response", type: "mcq", category: "Exam Review",
+        id: "exam_pid_response", type: "mcq", category: "Integrated Practice",
         promptEn: "Which controller combines actions to improve both transient response and steady-state accuracy?",
         optionsEn: ["PID controller", "Integral-only controller", "Fuse", "Open-loop controller"],
         options: ["PID controller", "Integral-only controller", "Fuse", "Open-loop controller"],
@@ -2107,14 +2100,14 @@
         explanation: "P وD يحسنان الاستجابة العابرة، وI يزيل steady-state error؛ لذلك الإجابة الأدق PID."
       },
       {
-        id: "exam_cap_level", type: "essay", category: "Exam Review",
+        id: "exam_cap_level", type: "essay", category: "Integrated Practice",
         promptEn: "Explain how to control or measure tank level using a capacitive level sensor.",
         answerEn: "Two conductive electrodes, or one probe and the tank wall, form a capacitor. As liquid level rises, more of the dielectric between the electrodes changes from air to liquid, so capacitance changes. An electronic transmitter converts this capacitance into a proportional level signal such as 4-20 mA. The signal can be displayed or compared with a setpoint to operate a pump or valve.",
         displayAnswer: "المسبار وجدار الخزان يصنعان capacitor؛ ارتفاع السائل يغير dielectric وبالتالي capacitance، ثم يحول transmitter التغير إلى level signal مثل 4-20 mA.",
         explanation: "المخطط: Level -> capacitance C -> transmitter -> 4-20 mA -> controller/display."
       },
       {
-        id: "exam_rtd_calc", type: "numeric", category: "Exam Review",
+        id: "exam_rtd_calc", type: "numeric", category: "Integrated Practice",
         promptEn: "A platinum resistance thermometer is 140.5 ohm at 10 C and becomes 305.3 ohm in hot gas. If alpha = 0.0039 per C, calculate the gas temperature.",
         value: 310.76, tolerance: 0.2,
         answerEn: "Using R2 = R1[1 + alpha(T2 - T1)]: T2 = 10 + (305.3/140.5 - 1)/0.0039 = 310.76 C, approximately 311 C.",
@@ -2122,14 +2115,14 @@
         explanation: "استخدم مقاومة 140.5 ohm كمرجع عند 10 C، وليس عند صفر."
       },
       {
-        id: "exam_distribution", type: "essay", category: "Exam Review",
+        id: "exam_distribution", type: "essay", category: "Integrated Practice",
         promptEn: "Sketch a complete marine electrical distribution system.",
         answerEn: "Main generators -> generator ACBs -> main busbars/MSB -> protected feeders to 440 V motors and large auxiliaries. From the MSB, transformers feed 220 V distribution and transformer-rectifiers or battery chargers feed 24 V DC. A tie feeder supplies the emergency switchboard during normal operation; the emergency generator supplies the ESB after main-power failure. Show shore supply, bus-tie breaker, essential loads, and non-essential loads.",
         displayAnswer: "ارسم generators عبر ACB إلى MSB busbar، ثم 440 V loads وtransformer إلى 220 V وrectifier إلى 24 V، مع ESB/emergency generator وshore supply.",
         explanation: "سمِّ breakers والباصات والأحمال الأساسية بوضوح."
       },
       {
-        id: "exam_cpp", type: "essay", category: "Exam Review",
+        id: "exam_cpp", type: "essay", category: "Integrated Practice",
         promptEn: "Describe with a block diagram an automatic control system for a controllable-pitch propeller (CPP).",
         answerEn: "Bridge pitch command/setpoint -> comparator -> pitch controller -> electro-hydraulic converter/servo valve -> hydraulic actuator -> propeller-blade pitch. A pitch-position sensor measures actual blade angle and returns negative feedback to the comparator. Engine-load or shaft-speed limiting may modify the command to prevent overload. Disturbances include sea load and vessel resistance.",
         displayAnswer: "المخطط: pitch command -> comparator -> controller -> E/H servo valve -> hydraulic actuator -> blade pitch، مع position sensor feedback وحد حمل المحرك.",
