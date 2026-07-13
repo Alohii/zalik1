@@ -836,6 +836,207 @@
         width: 100%;
       }
     }
+
+    /* Focus mode: one learning item at a time. */
+    .focus-study,
+    .focus-question-shell,
+    .exam-start-panel {
+      width: min(820px, 100%);
+      margin: 0 auto;
+    }
+
+    .focus-header,
+    .exam-start-panel {
+      text-align: center;
+    }
+
+    .focus-header h2,
+    .exam-start-panel h2 {
+      margin: 8px 0 4px;
+      font-size: 26px;
+    }
+
+    .step-label {
+      display: inline-block;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .focus-topic-row {
+      display: grid;
+      grid-template-columns: auto minmax(180px, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      margin: 22px 0 10px;
+    }
+
+    .review-focus {
+      margin: 14px 0;
+    }
+
+    .review-focus .review-card {
+      min-height: 330px;
+      padding: 28px;
+      align-content: center;
+      box-shadow: var(--shadow);
+    }
+
+    .review-focus .review-card h3 {
+      font-size: 26px;
+    }
+
+    .review-focus .card-list {
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .focus-navigation {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr 1fr;
+      gap: 10px;
+      margin: 12px 0 18px;
+    }
+
+    .focus-question-shell > .question-panel {
+      margin-top: 14px;
+      min-height: 390px;
+    }
+
+    .compact-header {
+      margin-bottom: 8px;
+    }
+
+    .optional-section {
+      border-top: 1px solid var(--line);
+      margin-top: 10px;
+      padding: 0;
+    }
+
+    .optional-section summary {
+      cursor: pointer;
+      padding: 16px 4px;
+      color: var(--muted);
+      font-weight: 700;
+      list-style-position: inside;
+    }
+
+    .optional-content {
+      display: grid;
+      gap: 14px;
+      padding: 0 0 18px;
+    }
+
+    .compact-tool {
+      min-height: auto;
+    }
+
+    .compact-optional .drawing-wrap {
+      margin-bottom: 16px;
+    }
+
+    .exam-start-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .exam-start-panel .exam-controls {
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .compact-stats {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .compact-stats .stat-box {
+      min-height: auto;
+      min-width: 92px;
+      padding: 8px 12px;
+    }
+
+    .compact-stats .stat-value {
+      font-size: 18px;
+    }
+
+    .model-sketch {
+      direction: ltr;
+      overflow-x: auto;
+      margin: 8px 0 14px;
+      padding: 10px;
+      background: #fbfaf7;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .model-sketch svg {
+      display: block;
+      width: 100%;
+      min-width: 680px;
+      height: auto;
+    }
+
+    .model-sketch-title {
+      display: block;
+      direction: rtl;
+      margin-bottom: 8px;
+      color: var(--teal);
+      font-weight: 800;
+    }
+
+    .sketch-box {
+      fill: #fff;
+      stroke: #0f766e;
+      stroke-width: 2;
+    }
+
+    .sketch-line,
+    .sketch-return {
+      fill: none;
+      stroke: #1d2430;
+      stroke-width: 2;
+    }
+
+    .sketch-return {
+      stroke: #3949ab;
+      stroke-dasharray: 6 4;
+    }
+
+    .sketch-text,
+    .sketch-note,
+    .sketch-heading {
+      font-family: Arial, sans-serif;
+      fill: #1d2430;
+      text-anchor: middle;
+      font-size: 13px;
+    }
+
+    .sketch-note {
+      fill: #3949ab;
+    }
+
+    .sketch-heading {
+      text-anchor: start;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .nav-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .focus-topic-row { grid-template-columns: 1fr; }
+      .focus-navigation { grid-template-columns: 1fr 1fr; }
+      .focus-navigation .primary-btn { grid-column: 1 / -1; grid-row: 1; }
+      .review-focus .review-card { min-height: 300px; padding: 20px; }
+      .review-focus .review-card h3 { font-size: 22px; }
+      .exam-start-panel { padding: 22px 16px; }
+      .compact-stats { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -850,162 +1051,103 @@
           </div>
         </div>
         <nav class="nav-tabs" aria-label="أقسام الموقع">
-          <button class="tab-btn" data-view="review" aria-selected="true">مراجعة</button>
+          <button class="tab-btn" data-view="review" aria-selected="true">المذاكرة</button>
           <button class="tab-btn" data-view="practice" aria-selected="false">تدريب</button>
           <button class="tab-btn" data-view="exam" aria-selected="false">اختبار</button>
-          <button class="tab-btn" data-view="draw" aria-selected="false">رسم</button>
-          <button class="tab-btn" data-view="sources" aria-selected="false">المراجع</button>
         </nav>
       </div>
     </header>
 
     <main>
       <section id="reviewView" class="view active">
-        <div class="dashboard">
-          <div class="summary-panel">
-            <div>
-              <h2 class="headline">ذاكر المحاضرات بصيغة <span>بطاقات + اختبار + كتابة باليد</span></h2>
-              <p class="muted">المحتوى مبني من ملفات ACS والصور المرسلة، مع أسئلة المقال والرسم الموجودة في الورقة.</p>
+        <div class="focus-study">
+          <header class="focus-header">
+            <span class="step-label">الخطوة 1</span>
+            <h2>اختر الموضوع وراجع بهدوء</h2>
+            <p class="muted">بطاقة واحدة في كل مرة. بعد ما تفهمها انتقل للتدريب.</p>
+          </header>
+          <div class="focus-topic-row">
+            <label for="topicFilter">الموضوع</label>
+            <select id="topicFilter"></select>
+            <span id="reviewCounter" class="muted"></span>
+          </div>
+          <div class="progress-bar"><span id="reviewProgress"></span></div>
+          <div id="reviewGrid" class="review-focus"></div>
+          <div class="focus-navigation">
+            <button class="soft-btn" id="prevReview">السابق</button>
+            <button class="primary-btn" id="goPracticeBtn">تدرّب على الأسئلة</button>
+            <button class="soft-btn" id="nextReview">التالي</button>
+          </div>
+
+          <details class="optional-section">
+            <summary>أدوات إضافية</summary>
+            <div class="optional-content">
+              <div class="tool-panel compact-tool">
+                <h2>ملاحظاتي</h2>
+                <textarea id="studyNotes" placeholder="اكتب ملاحظة قصيرة"></textarea>
+                <div class="row-controls"><button class="primary-btn" id="saveNotesBtn">حفظ</button><button class="soft-btn" id="clearNotesBtn">مسح</button></div>
+              </div>
+              <section class="calc-panel">
+                <h2 class="section-title">حاسبة Transfer Function</h2>
+                <div class="calc-grid">
+                  <label>النوع<select id="calcType"><option value="series">Series</option><option value="parallel">Parallel</option><option value="negative">Negative feedback</option><option value="positive">Positive feedback</option></select></label>
+                  <label>G1 أو G<input id="calcG1" type="number" value="4" step="any"></label>
+                  <label>G2 أو H<input id="calcG2" type="number" value="5" step="any"></label>
+                  <label>G3<input id="calcG3" type="number" step="any" placeholder="اختياري"></label>
+                  <button class="primary-btn" id="calcBtn">احسب</button>
+                  <div class="formula" id="calcResult">G_eq = 4 × 5 = 20</div>
+                </div>
+              </section>
+              <div class="diagram-strip" id="diagramStrip"></div>
             </div>
-            <div class="quick-stats" id="quickStats"></div>
-          </div>
-          <div class="tool-panel">
-            <h2>ملاحظات سريعة</h2>
-            <textarea id="studyNotes" placeholder="اكتب أي ملاحظة أو قانون تبغى تراجعه لاحقًا"></textarea>
-            <div class="row-controls">
-              <button class="primary-btn" id="saveNotesBtn">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>
-                حفظ
-              </button>
-              <button class="soft-btn" id="clearNotesBtn">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 15H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
-                مسح
-              </button>
+          </details>
+
+          <details class="optional-section">
+            <summary>الواجبات والمراجع</summary>
+            <div class="optional-content">
+              <div id="manualQuestions" class="manual-questions"></div>
+              <div id="homeworkList" class="review-grid"></div>
+              <button class="soft-btn" id="openSourcesBtn">عرض الملفات والصور المرجعية</button>
             </div>
-          </div>
+          </details>
+          <div id="quickStats" class="hidden"></div>
         </div>
-
-        <div class="row-controls">
-          <h2 class="section-title">بطاقات المراجعة</h2>
-          <div class="topic-filter" id="topicFilter"></div>
-        </div>
-        <div class="review-grid" id="reviewGrid"></div>
-
-        <div class="diagram-strip" id="diagramStrip"></div>
-
-        <section class="calc-panel">
-          <h2 class="section-title">حاسبة سريعة للـ Transfer Function</h2>
-          <div class="calc-grid">
-            <label>النوع
-              <select id="calcType">
-                <option value="series">Series</option>
-                <option value="parallel">Parallel</option>
-                <option value="negative">Negative feedback</option>
-                <option value="positive">Positive feedback</option>
-              </select>
-            </label>
-            <label>G1 أو G
-              <input id="calcG1" type="number" value="4" step="any">
-            </label>
-            <label>G2 أو H
-              <input id="calcG2" type="number" value="5" step="any">
-            </label>
-            <label>G3
-              <input id="calcG3" type="number" value="" step="any" placeholder="اختياري">
-            </label>
-            <button class="primary-btn" id="calcBtn">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h10"/></svg>
-              احسب
-            </button>
-            <div class="formula" id="calcResult">G_eq = 4 × 5 = 20</div>
-          </div>
-        </section>
-
-        <h2 class="section-title" style="margin-top:18px;">أسئلة الورقة المكتوبة</h2>
-        <div class="manual-questions" id="manualQuestions"></div>
-
-        <h2 class="section-title" style="margin-top:18px;">واجبات الدكتور</h2>
-        <div class="review-grid" id="homeworkList"></div>
       </section>
 
       <section id="practiceView" class="view">
-        <div class="question-layout">
+        <div class="focus-question-shell">
+          <header class="focus-header compact-header">
+            <span class="step-label">الخطوة 2</span>
+            <h2>حل سؤالًا واحدًا</h2>
+          </header>
+          <div class="focus-topic-row"><label for="practiceFilter">الموضوع</label><select id="practiceFilter"></select></div>
+          <div class="progress-bar" aria-label="نسبة التقدم"><span id="practiceProgress"></span></div>
           <div class="question-panel" id="practicePanel"></div>
-          <aside class="side-stack">
-            <div class="mini-panel">
-              <h2 class="section-title">فلترة التدريب</h2>
-              <select id="practiceFilter"></select>
-              <div class="progress-bar" aria-label="نسبة التقدم"><span id="practiceProgress"></span></div>
-              <div class="row-controls">
-                <button class="soft-btn" id="prevPractice">
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-                  السابق
-                </button>
-                <button class="soft-btn" id="nextPractice">
-                  التالي
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-                </button>
-              </div>
-            </div>
-            <div class="mini-panel">
-              <h2 class="section-title">لوحة الحل</h2>
-              <div class="drawing-wrap" data-canvas-shell="practice"></div>
-            </div>
-          </aside>
+          <div class="focus-navigation">
+            <button class="soft-btn" id="prevPractice">السابق</button>
+            <button class="soft-btn" id="nextPractice">السؤال التالي</button>
+          </div>
+          <details class="optional-section compact-optional"><summary>أحتاج مساحة للرسم</summary><div class="drawing-wrap" data-canvas-shell="practice"></div></details>
         </div>
       </section>
 
       <section id="examView" class="view">
-        <div class="dashboard">
-          <div class="summary-panel">
-            <h2 class="headline">اختبار مختلط</h2>
-            <p class="muted">التصحيح التلقائي للأسئلة الموضوعية والحسابية. الأسئلة المقالية تظهر مع نموذج إجابة بعد التسليم.</p>
-            <div class="exam-controls">
-              <label>عدد الأسئلة
-                <select id="examCount">
-                  <option value="12">12</option>
-                  <option value="18" selected>18</option>
-                  <option value="all">الكل</option>
-                </select>
-              </label>
-              <button class="primary-btn" id="startExamBtn">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7Z"/></svg>
-                ابدأ
-              </button>
-            </div>
+        <div class="exam-start-panel">
+          <span class="step-label">الخطوة 3</span>
+          <h2>اختبر نفسك</h2>
+          <p class="muted">ابدأ باختبار قصير، ثم زد العدد عندما تكون جاهزًا.</p>
+          <div class="exam-controls">
+            <label>عدد الأسئلة<select id="examCount"><option value="5" selected>5 أسئلة</option><option value="10">10 أسئلة</option><option value="18">18 سؤالًا</option><option value="all">الكل</option></select></label>
+            <button class="primary-btn" id="startExamBtn">ابدأ الاختبار</button>
           </div>
-          <div class="tool-panel">
-            <h2>مؤشر الاختبار</h2>
-            <div class="quick-stats" id="examStats"></div>
-            <div class="progress-bar"><span id="examProgress"></span></div>
-          </div>
+          <div id="examStats" class="compact-stats"></div>
+          <div class="progress-bar"><span id="examProgress"></span></div>
         </div>
 
-        <div class="question-layout hidden" id="examWorkspace">
+        <div class="focus-question-shell hidden" id="examWorkspace">
           <div class="question-panel" id="examPanel"></div>
-          <aside class="side-stack">
-            <div class="mini-panel">
-              <h2 class="section-title">تنقل</h2>
-              <div class="row-controls">
-                <button class="soft-btn" id="prevExam">
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-                  السابق
-                </button>
-                <button class="soft-btn" id="nextExam">
-                  التالي
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-                </button>
-              </div>
-              <button class="primary-btn" id="submitExamBtn">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
-                تسليم
-              </button>
-            </div>
-            <div class="mini-panel">
-              <h2 class="section-title">مساحة حل</h2>
-              <div class="drawing-wrap" data-canvas-shell="exam"></div>
-            </div>
-          </aside>
+          <div class="focus-navigation"><button class="soft-btn" id="prevExam">السابق</button><button class="primary-btn" id="submitExamBtn">تسليم الاختبار</button><button class="soft-btn" id="nextExam">التالي</button></div>
+          <details class="optional-section compact-optional"><summary>مساحة حل ورسم</summary><div class="drawing-wrap" data-canvas-shell="exam"></div></details>
         </div>
         <div class="result-panel" id="examResult"></div>
       </section>
@@ -1027,6 +1169,7 @@
       </section>
 
       <section id="sourcesView" class="view">
+        <button class="soft-btn" id="backFromSourcesBtn">العودة للمذاكرة</button>
         <h2 class="section-title">الصور والمراجع المستخدمة</h2>
         <div class="sources-grid">
           <article class="source-panel">
@@ -2085,6 +2228,7 @@
 
     let currentView = "review";
     let currentCategory = "الكل";
+    let currentReviewIndex = 0;
     let practiceQuestions = [...quizBank];
     let practiceIndex = 0;
     let examQuestions = [];
@@ -2114,9 +2258,76 @@
       return q.answerEn || q.displayAnswer || (q.options ? getOptions(q)[q.answer] : "");
     }
 
-    function answerHtml(q) {
+    function flowSketch(labels, options = {}) {
+      const boxWidth = 112;
+      const gap = 38;
+      const startX = 24;
+      const width = Math.max(680, startX * 2 + labels.length * boxWidth + (labels.length - 1) * gap);
+      const boxY = 42;
+      const boxHeight = 64;
+      const blocks = labels.map((label, index) => {
+        const x = startX + index * (boxWidth + gap);
+        const lines = label.split("\n");
+        const text = lines.map((line, lineIndex) => `<tspan x="${x + boxWidth / 2}" dy="${lineIndex ? 16 : 0}">${escapeHtml(line)}</tspan>`).join("");
+        const arrow = index < labels.length - 1
+          ? `<line x1="${x + boxWidth}" y1="74" x2="${x + boxWidth + gap - 8}" y2="74" class="sketch-line" marker-end="url(#flowArrow)"/>`
+          : "";
+        return `<rect x="${x}" y="${boxY}" width="${boxWidth}" height="${boxHeight}" rx="4" class="sketch-box"/><text x="${x + boxWidth / 2}" y="${lines.length > 1 ? 67 : 79}" class="sketch-text">${text}</text>${arrow}`;
+      }).join("");
+      const loop = options.loop
+        ? `<path d="M ${width - startX - boxWidth / 2} 106 V 142 H ${startX + boxWidth / 2} V 114" class="sketch-return" marker-end="url(#flowArrow)"/><text x="${width / 2}" y="161" class="sketch-note">${escapeHtml(options.loop)}</text>`
+        : "";
+      return `<div class="model-sketch"><strong class="model-sketch-title">نموذج الرسم</strong><svg viewBox="0 0 ${width} ${options.loop ? 174 : 130}" role="img" aria-label="${escapeHtml(options.title || "block diagram")}"><defs><marker id="flowArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1d2430"/></marker></defs>${blocks}${loop}</svg></div>`;
+    }
+
+    function comparisonSketch() {
+      return `<div class="model-sketch"><strong class="model-sketch-title">نموذج الرسم</strong><svg viewBox="0 0 760 260" role="img" aria-label="open loop and closed loop comparison"><defs><marker id="cmpArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1d2430"/></marker></defs><text x="20" y="34" class="sketch-heading">OPEN LOOP</text><g transform="translate(20,48)"><rect x="0" y="0" width="120" height="54" class="sketch-box"/><text x="60" y="32" class="sketch-text">Controller</text><line x1="120" y1="27" x2="174" y2="27" class="sketch-line" marker-end="url(#cmpArrow)"/><rect x="182" y="0" width="120" height="54" class="sketch-box"/><text x="242" y="32" class="sketch-text">Plant</text><line x1="302" y1="27" x2="360" y2="27" class="sketch-line" marker-end="url(#cmpArrow)"/><text x="372" y="32" class="sketch-text">Output</text></g><text x="20" y="154" class="sketch-heading">CLOSED LOOP</text><g transform="translate(20,168)"><circle cx="34" cy="27" r="22" class="sketch-box"/><text x="34" y="32" class="sketch-text">Σ</text><line x1="56" y1="27" x2="104" y2="27" class="sketch-line" marker-end="url(#cmpArrow)"/><rect x="112" y="0" width="110" height="54" class="sketch-box"/><text x="167" y="32" class="sketch-text">Controller</text><line x1="222" y1="27" x2="270" y2="27" class="sketch-line" marker-end="url(#cmpArrow)"/><rect x="278" y="0" width="110" height="54" class="sketch-box"/><text x="333" y="32" class="sketch-text">Plant</text><line x1="388" y1="27" x2="448" y2="27" class="sketch-line" marker-end="url(#cmpArrow)"/><text x="462" y="32" class="sketch-text">Output</text><path d="M 490 42 V 76 H 34 V 52" class="sketch-return" marker-end="url(#cmpArrow)"/><text x="260" y="94" class="sketch-note">Sensor feedback</text></g></svg></div>`;
+    }
+
+    function pidSketch() {
+      return `<div class="model-sketch"><strong class="model-sketch-title">نموذج الرسم</strong><svg viewBox="0 0 760 300" role="img" aria-label="PID controller block diagram"><defs><marker id="pidArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1d2430"/></marker></defs><text x="24" y="153" class="sketch-heading">e(t)</text><line x1="62" y1="148" x2="120" y2="148" class="sketch-line"/><circle cx="120" cy="148" r="4" fill="#1d2430"/><path d="M120 148 V58 H190" class="sketch-line" marker-end="url(#pidArrow)"/><path d="M120 148 H190" class="sketch-line" marker-end="url(#pidArrow)"/><path d="M120 148 V238 H190" class="sketch-line" marker-end="url(#pidArrow)"/><rect x="198" y="30" width="150" height="56" class="sketch-box"/><text x="273" y="64" class="sketch-text">P: Kp</text><rect x="198" y="120" width="150" height="56" class="sketch-box"/><text x="273" y="154" class="sketch-text">I: Ki / s</text><rect x="198" y="210" width="150" height="56" class="sketch-box"/><text x="273" y="244" class="sketch-text">D: Kd s</text><path d="M348 58 H470 V128" class="sketch-line"/><path d="M348 148 H470" class="sketch-line"/><path d="M348 238 H470 V168" class="sketch-line"/><circle cx="490" cy="148" r="24" class="sketch-box"/><text x="490" y="154" class="sketch-text">Σ</text><line x1="514" y1="148" x2="620" y2="148" class="sketch-line" marker-end="url(#pidArrow)"/><text x="640" y="154" class="sketch-heading">u(t)</text><text x="380" y="292" class="sketch-note">Gc(s) = Kp + Ki/s + Kd s</text></svg></div>`;
+    }
+
+    function diagramModel(q) {
+      const flows = {
+        q20: [["Pressure", "Elastic element\nBourdon / Bellows", "Displacement", "Transducer", "Output signal"]],
+        q21: [["Pressure", "Bourdon tube", "Linkage", "Micro-switch", "Compressor\nON / OFF"]],
+        q22: [["Set pressure", "Controller", "Compressor", "Air vessel", "Pressure sensor"], { loop: "negative feedback" }],
+        q23: [["Pressure", "Bourdon /\nBellows", "Core movement", "LVDT coils", "Vout = V1 - V2"]],
+        q24: [["Level setpoint", "Controller", "Feed-water valve", "Boiler drum", "Level sensor"], { loop: "level feedback" }],
+        q25: [["Reference", "Comparator", "Controller", "Actuator", "Plant", "Output / Sensor"], { loop: "feedback signal" }],
+        hw1_q1: [["Reference", "Comparator", "Controller", "Actuator", "Plant", "Sensor"], { loop: "measured output feedback" }],
+        trans_p_p: [["Input pressure", "Bellows", "Nozzle / flapper", "Pilot relay", "Output pressure"]],
+        trans_p_i: [["Pressure", "Diaphragm", "Strain gauge", "Transmitter", "4-20 mA"]],
+        trans_p_v: [["Pressure", "Bourdon", "LVDT core", "V1 - V2", "Voltage"]],
+        trans_e_h: [["Electric signal", "Electromagnet", "Flapper", "Spool valve", "Hydraulic flow"]],
+        trans_p_d: [["Pressure", "Bourdon tube", "Free-end motion", "Linkage / gear", "Pointer"]],
+        trans_i_p: [["4-20 mA", "Coil force", "Flapper / nozzle", "Pneumatic relay", "3-15 psi"]],
+        ctrl_onoff: [["Measured value", "Lower / upper\nlimits", "ON-OFF logic", "Actuator", "Process"]],
+        act_compare: [["Control signal", "Air / Oil supply", "Control valve", "Cylinder", "Mechanical motion"]],
+        act_motor: [["Controller", "Motor starter", "Electric motor", "Gearbox", "Marine valve", "Limit switches"]],
+        seq_diesel: [["Interlocks", "Lube oil", "Cooling water", "Fuel system", "Starting air", "Engine running"]],
+        seq_tank: [["Low level", "Pump ON", "Tank filling", "High level", "Pump OFF"]],
+        seq_boiler: [["Interlocks", "Fan + airflow", "Pre-purge", "Pilot ignition", "Flame proof", "Main fuel"]],
+        seq_compressor: [["Pressure LOW", "Interlocks", "Start unloaded", "Load compressor", "Pressure HIGH", "Unload + stop"]],
+        msb_function: [["Generators", "Generator ACBs", "Main busbar", "Protected feeders", "Ship loads"]],
+        msb_services: [["Main generators", "MSB", "440 V loads", "Transformer 220 V", "Rectifier 24 V", "Emergency SB"]],
+        msb_acb: [["Busbar", "Main contacts", "Arc contacts", "Arc chute", "Load"], { loop: "OCR / relay -> trip coil -> opening mechanism" }],
+        msb_ocr: [["Line current", "CT", "OCR pickup + timer", "Trip contact", "ACB trip coil", "Circuit opens"]],
+        exam_cap_level: [["Tank level", "Probe capacitance", "C changes", "Transmitter", "4-20 mA", "Display / control"]],
+        exam_distribution: [["Generators", "ACBs", "MSB busbar", "440 V feeders", "220 V transformer", "ESB / 24 V"]],
+        exam_cpp: [["Pitch command", "Comparator", "Controller", "E/H servo valve", "Hydraulic ram", "Blade pitch sensor"], { loop: "actual pitch feedback" }]
+      };
+      if (q.id === "hw1_q3") return comparisonSketch();
+      if (q.id === "ctrl_pid_block") return pidSketch();
+      if (q.id === "hw3_q1") return flowSketch(["Temperature", "Thermocouple", "RTD", "Thermistor", "Bimetal", "Liquid glass"], { title: "temperature sensor types" });
+      const config = flows[q.id];
+      return config ? flowSketch(config[0], config[1] || {}) : "";
+    }
+
+    function answerHtml(q, showDiagram = true) {
       const model = getModelAnswer(q);
-      const parts = [`<strong>Model answer:</strong><span dir="ltr">${escapeHtml(model)}</span>`];
+      const parts = [showDiagram ? diagramModel(q) : "", `<strong>Model answer:</strong><span dir="ltr">${escapeHtml(model)}</span>`].filter(Boolean);
       if (q.displayAnswer && q.displayAnswer !== model) {
         parts.push(`<strong>بالعربي:</strong><span>${escapeHtml(q.displayAnswer)}</span>`);
       }
@@ -2287,13 +2498,13 @@
 
     function renderTopicFilter() {
       const filter = document.getElementById("topicFilter");
-      filter.innerHTML = categories.map(cat => `<button class="chip ${cat === currentCategory ? "active" : ""}" data-category="${cat}">${cat}</button>`).join("");
-      filter.querySelectorAll("button").forEach(btn => {
-        btn.addEventListener("click", () => {
-          currentCategory = btn.dataset.category;
-          renderTopicFilter();
-          renderReviewCards();
-        });
+      const reviewCategories = ["الكل", ...new Set(reviewCards.map(card => card.category))];
+      filter.innerHTML = reviewCategories.map(cat => `<option value="${cat}">${cat}</option>`).join("");
+      filter.value = currentCategory;
+      filter.addEventListener("change", () => {
+        currentCategory = filter.value;
+        currentReviewIndex = 0;
+        renderReviewCards();
       });
     }
 
@@ -2302,7 +2513,13 @@
         ? reviewCards
         : reviewCards.filter(card => card.category === currentCategory);
       const grid = document.getElementById("reviewGrid");
-      grid.innerHTML = cards.map(card => `
+      if (!cards.length) {
+        grid.innerHTML = `<div class="empty-state">لا توجد بطاقات في هذا الموضوع.</div>`;
+        return;
+      }
+      currentReviewIndex = Math.max(0, Math.min(currentReviewIndex, cards.length - 1));
+      const card = cards[currentReviewIndex];
+      grid.innerHTML = `
         <article class="review-card">
           <div class="tag-row">
             <span class="tag teal">${escapeHtml(card.category)}</span>
@@ -2311,7 +2528,9 @@
           <h3>${escapeHtml(card.title)}</h3>
           <ul class="card-list">${card.body.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
           <div class="formula">${escapeHtml(card.formula)}</div>
-        </article>`).join("");
+        </article>`;
+      document.getElementById("reviewCounter").textContent = `${currentReviewIndex + 1} من ${cards.length}`;
+      document.getElementById("reviewProgress").style.width = `${((currentReviewIndex + 1) / cards.length) * 100}%`;
     }
 
     function diagramSvg(type) {
@@ -2508,7 +2727,7 @@
             return `<article class="review-answer-item ${ok === true ? "good" : ok === false ? "bad" : ""}">
               <strong dir="ltr">${i + 1}. ${escapeHtml(getPrompt(q))}</strong>
               <div class="muted">إجابتك: ${escapeHtml(user || "بدون إجابة")}</div>
-              <div class="answer-key">${answerHtml(q)}</div>
+              <div class="answer-key">${answerHtml(q, false)}</div>
             </article>`;
           }).join("")}
         </div>
@@ -2558,6 +2777,19 @@
     function mountCanvas(shellName, key) {
       const shell = document.querySelector(`[data-canvas-shell="${shellName}"]`);
       if (!shell) return;
+      if (shell.getBoundingClientRect().width < 10) {
+        const details = shell.closest("details");
+        if (details) {
+          details.dataset.canvasKey = key;
+          if (!details.dataset.canvasBound) {
+            details.dataset.canvasBound = "true";
+            details.addEventListener("toggle", () => {
+              if (details.open) setupCanvasToolbar(shell, details.dataset.canvasKey);
+            });
+          }
+          return;
+        }
+      }
       setupCanvasToolbar(shell, key);
     }
 
@@ -2669,17 +2901,20 @@
       shell.querySelector('[data-tool="pen"]').classList.add("chip", "active");
     }
 
+    function showView(viewName) {
+      currentView = viewName;
+      document.querySelectorAll(".tab-btn").forEach(item => item.setAttribute("aria-selected", String(item.dataset.view === viewName)));
+      document.querySelectorAll(".view").forEach(view => view.classList.remove("active"));
+      document.getElementById(`${viewName}View`).classList.add("active");
+      if (viewName === "practice") renderPractice();
+      if (viewName === "exam") renderExamStats();
+      if (viewName === "draw") renderDrawPrompt();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
     function setupNavigation() {
       document.querySelectorAll(".tab-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          currentView = btn.dataset.view;
-          document.querySelectorAll(".tab-btn").forEach(item => item.setAttribute("aria-selected", String(item === btn)));
-          document.querySelectorAll(".view").forEach(view => view.classList.remove("active"));
-          document.getElementById(`${currentView}View`).classList.add("active");
-          if (currentView === "practice") renderPractice();
-          if (currentView === "exam") renderExamStats();
-          if (currentView === "draw") renderDrawPrompt();
-        });
+        btn.addEventListener("click", () => showView(btn.dataset.view));
       });
     }
 
@@ -2692,6 +2927,19 @@
         document.getElementById("studyNotes").value = "";
         localStorage.removeItem("studyNotes");
       });
+
+      document.getElementById("prevReview").addEventListener("click", () => {
+        currentReviewIndex = Math.max(0, currentReviewIndex - 1);
+        renderReviewCards();
+      });
+      document.getElementById("nextReview").addEventListener("click", () => {
+        const cards = currentCategory === "الكل" ? reviewCards : reviewCards.filter(card => card.category === currentCategory);
+        currentReviewIndex = Math.min(cards.length - 1, currentReviewIndex + 1);
+        renderReviewCards();
+      });
+      document.getElementById("goPracticeBtn").addEventListener("click", () => showView("practice"));
+      document.getElementById("openSourcesBtn").addEventListener("click", () => showView("sources"));
+      document.getElementById("backFromSourcesBtn").addEventListener("click", () => showView("review"));
 
       document.getElementById("prevPractice").addEventListener("click", () => {
         practiceIndex = Math.max(0, practiceIndex - 1);
