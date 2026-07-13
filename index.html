@@ -2225,7 +2225,7 @@
       if (englishModelAnswers[q.id]) q.answerEn = englishModelAnswers[q.id];
     });
 
-    const drawPrompts = quizBank.filter(q => q.type === "essay");
+    const drawPrompts = quizBank.filter(q => q.type === "essay" && diagramModel(q));
 
     let currentView = "review";
     let currentCategory = "الكل";
