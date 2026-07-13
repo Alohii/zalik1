@@ -854,7 +854,7 @@
           <button class="tab-btn" data-view="practice" aria-selected="false">تدريب</button>
           <button class="tab-btn" data-view="exam" aria-selected="false">اختبار</button>
           <button class="tab-btn" data-view="draw" aria-selected="false">رسم</button>
-          <button class="tab-btn" data-view="sources" aria-selected="false">الصور</button>
+          <button class="tab-btn" data-view="sources" aria-selected="false">المراجع</button>
         </nav>
       </div>
     </header>
@@ -1027,7 +1027,7 @@
       </section>
 
       <section id="sourcesView" class="view">
-        <h2 class="section-title">الصور المستخدمة داخل المراجعة</h2>
+        <h2 class="section-title">الصور والمراجع المستخدمة</h2>
         <div class="sources-grid">
           <article class="source-panel">
             <img src="assets/handwritten-questions.jpg" alt="صورة الأسئلة المكتوبة يدويًا">
@@ -1050,14 +1050,27 @@
               <p class="muted">استخدمت منه أمثلة الجمع والتوازي والـ feedback مع H(s).</p>
             </div>
           </article>
+          <article class="source-panel">
+            <img src="assets/exam-review-questions.jpg" alt="صورة أسئلة مراجعة الاختبار">
+            <div>
+              <h3>أسئلة مراجعة الاختبار</h3>
+              <p class="muted">تتضمن fill-in، LVDT، capacitive level، RTD، main switchboard وcontrollable-pitch propeller.</p>
+            </div>
+          </article>
         </div>
 
         <div class="mini-panel" style="margin-top:14px;">
           <h2 class="section-title">الملفات المرجعية</h2>
           <ul class="card-list">
-            <li>2-fundamentals for ACS..pdf</li>
-            <li>3-4- open loop & closed loop & transfer function.pdf</li>
-            <li>5-Lecture Sensors (1).ppt</li>
+            <li>2-fundamentals for ACS. 2.pdf</li>
+            <li>3-4- open loop & closed loop & transfer function 2.pdf</li>
+            <li>5-Lecture Sensors (1) 2.ppt</li>
+            <li>5- Sequntial control-2026.pptx</li>
+            <li>6-Transducers.pdf</li>
+            <li>7-controllers.pdf</li>
+            <li>8-Actuator.ppt</li>
+            <li>9-MAIN SWITCH BOARD.pptx</li>
+            <li>main switch board safety devices.pdf</li>
             <li>الصور المرسلة من المحاضرة والورقة المكتوبة</li>
           </ul>
         </div>
@@ -1276,6 +1289,54 @@
           "Describe with aid of sketch the different types of temperature sensors.",
           "With respect to level sensors, calculate the level of a tank with a height of 3 m using the ultrasonic method, if the reflection time is 3x10^-3 s and the speed of sound is 340 m/s.",
           "Explain how photocells are used in three different marine applications."
+        ]
+      },
+      {
+        title: "Transducer HW",
+        questions: [
+          "Give an example of a pressure-to-pressure transducer.",
+          "Give an example of a pressure-to-current transducer.",
+          "Give an example of a pressure-to-voltage transducer.",
+          "Give an example of an electric-to-hydraulic transducer.",
+          "Give an example of a pressure-to-displacement transducer.",
+          "Give an example of a current-to-pressure transducer."
+        ]
+      },
+      {
+        title: "Controller HW",
+        questions: [
+          "Describe with the aid of sketches three methods of ON-OFF control.",
+          "Compare proportional, integral, and derivative controllers.",
+          "Sketch a PID controller block diagram and write its equation and transfer function."
+        ]
+      },
+      {
+        title: "Actuator HW",
+        questions: [
+          "Compare pneumatic and hydraulic actuators and give an example of each.",
+          "Give an example of using an electric motor as a marine actuator."
+        ]
+      },
+      {
+        title: "Sequential Control HW",
+        questions: [
+          "Define sequential control and list five characteristics.",
+          "Explain its importance in marine systems and name six components.",
+          "Explain the functions of timers, limit switches, and interlocks.",
+          "Describe diesel-engine starting and automatic tank-filling sequences.",
+          "Compare continuous and sequential control.",
+          "Draw sequential block diagrams for an oil-fired boiler and a main air compressor."
+        ]
+      },
+      {
+        title: "Main Switchboard HW",
+        questions: [
+          "State the function of the ship's Main Switchboard (MSB).",
+          "State the MSB safety devices and the function of each.",
+          "Describe the services required for the MSB.",
+          "Describe with aid of sketch the Air Circuit Breaker (ACB).",
+          "Describe with aid of sketch the Overcurrent Relay (OCR).",
+          "State the causes of a short circuit."
         ]
       }
     ];
@@ -1654,6 +1715,281 @@
         ],
         answer: 0,
         explanation: "Photocell يقيس الضوء، لذلك يستخدم في flame detection أو automatic lighting."
+      }
+    );
+
+    quizBank.push(
+      {
+        id: "trans_p_p", type: "essay", category: "Transducers",
+        promptEn: "Give an example of a pressure-to-pressure (P/P) transducer.",
+        answerEn: "A pneumatic pressure transmitter using a bellows or diaphragm with a nozzle-flapper and pilot relay is a P/P transducer. Input pressure moves the elastic element, changes the nozzle back-pressure, and produces a standard proportional pneumatic output, commonly 3-15 psi.",
+        displayAnswer: "مثاله مرسل ضغط نيوماتيكي: الضغط يحرك bellows أو diaphragm، فتتغير فتحة nozzle-flapper ويخرج ضغط هواء متناسب مثل 3-15 psi.",
+        explanation: "المخطط: Input pressure -> elastic element -> nozzle/flapper + pilot relay -> output pressure."
+      },
+      {
+        id: "trans_p_i", type: "essay", category: "Transducers",
+        promptEn: "Give an example of a pressure-to-current (P/I) transducer.",
+        answerEn: "An electronic pressure transmitter is a P/I transducer. A diaphragm senses pressure, a strain gauge or capacitive element converts its movement into an electrical signal, and a transmitter conditions it to a standard 4-20 mA output.",
+        displayAnswer: "مرسل الضغط الإلكتروني يحول حركة diaphragm بواسطة strain gauge أو capacitive sensor ثم يعطي 4-20 mA.",
+        explanation: "المخطط: Pressure -> diaphragm -> electrical sensor -> transmitter -> 4-20 mA."
+      },
+      {
+        id: "trans_p_v", type: "essay", category: "Transducers",
+        promptEn: "Give an example of a pressure-to-voltage (P/V) transducer.",
+        answerEn: "A bellows or Bourdon tube connected to an LVDT is a P/V transducer. Pressure produces displacement and moves the LVDT core. The differential output voltage Vout = V1 - V2 is proportional to pressure.",
+        displayAnswer: "الضغط يحرك bellows أو Bourdon tube، والحركة تنقل قلب LVDT؛ فرق الجهد V1 - V2 يتناسب مع الضغط.",
+        explanation: "المخطط: Pressure -> elastic element -> core displacement -> LVDT -> voltage."
+      },
+      {
+        id: "trans_e_h", type: "essay", category: "Transducers",
+        promptEn: "Give an example of an electric-to-hydraulic (E/H) transducer.",
+        answerEn: "An electro-hydraulic servo valve is an E/H transducer. An electric current energizes a torque motor or solenoid, moves a flapper or spool valve, and controls hydraulic oil flow and pressure to an actuator.",
+        displayAnswer: "مثاله electro-hydraulic servo valve: التيار يحرك solenoid/torque motor ثم spool valve للتحكم في زيت الهيدروليك.",
+        explanation: "المخطط: Electric signal -> electromagnet -> flapper/spool -> hydraulic flow."
+      },
+      {
+        id: "trans_p_d", type: "essay", category: "Transducers",
+        promptEn: "Give an example of a pressure-to-displacement transducer.",
+        answerEn: "A Bourdon tube pressure gauge is a pressure-to-displacement transducer. Applied pressure tends to straighten the curved tube, moving its free end. A linkage and gear convert this displacement into pointer movement.",
+        displayAnswer: "Bourdon tube مثال مباشر: الضغط يجعل الأنبوب المقوس يميل للاستقامة، فتتحرك نهايته ويُنقل displacement إلى المؤشر.",
+        explanation: "يمكن أيضًا ذكر diaphragm أو bellows كعناصر تحول الضغط إلى إزاحة."
+      },
+      {
+        id: "trans_i_p", type: "essay", category: "Transducers",
+        promptEn: "Give an example of a current-to-pressure (I/P) transducer.",
+        answerEn: "An I/P converter changes a 4-20 mA control signal into a 3-15 psi pneumatic signal. Coil current produces electromagnetic force on a flapper; the nozzle back-pressure and pneumatic relay generate the proportional output pressure.",
+        displayAnswer: "محول I/P يحول 4-20 mA إلى 3-15 psi باستخدام coil وflapper-nozzle وpneumatic relay.",
+        explanation: "كلما زاد التيار زادت القوة على flapper فزاد ضغط الخرج."
+      },
+      {
+        id: "ctrl_onoff", type: "essay", category: "Controllers",
+        promptEn: "Describe with sketches three methods of ON-OFF control.",
+        answerEn: "1) Simple two-position control: output is fully ON below the setpoint and OFF above it. 2) ON-OFF control with differential gap (hysteresis): ON at the lower limit and OFF at the upper limit to prevent rapid cycling. 3) Three-position or split ON-OFF control: HIGH, OFF/neutral, and LOW actions are selected using two thresholds. Sketch each output against the measured variable.",
+        displayAnswer: "الطرق: تشغيل/إيقاف بسيط، تشغيل/إيقاف مع hysteresis بين حدين، وتحكم ثلاثي الوضع HIGH-OFF-LOW بحدين.",
+        explanation: "وجود differential gap يمنع التقطيع السريع حول setpoint."
+      },
+      {
+        id: "ctrl_pid_compare", type: "essay", category: "Controllers",
+        promptEn: "Compare proportional, integral, and derivative controllers.",
+        answerEn: "P action is proportional to present error: fast and simple, but it may leave steady-state offset. I action depends on accumulated error: it removes steady-state error, but may slow the response and reduce stability. D action depends on the rate of error change: it predicts the trend, improves damping and transient response, but is sensitive to noise.",
+        displayAnswer: "P يعتمد على الخطأ الحالي وقد يترك offset. I يجمع الخطأ ويلغي steady-state error لكنه قد يبطئ النظام. D يعتمد على سرعة تغير الخطأ ويحسن الاستقرار لكنه حساس للضوضاء.",
+        explanation: "احفظها: P = present، I = past accumulation، D = future trend."
+      },
+      {
+        id: "ctrl_pid_block", type: "essay", category: "Controllers",
+        promptEn: "Sketch a PID controller block diagram and write its equation and transfer function.",
+        answerEn: "Split the error e(t) into three parallel paths: Kp, Ki/s, and Kd*s, then add their outputs to obtain u(t). Equation: u(t)=Kp e(t)+Ki integral[e(t)dt]+Kd de(t)/dt. Transfer function: Gc(s)=U(s)/E(s)=Kp+Ki/s+Kd s.",
+        displayAnswer: "قسّم error إلى ثلاثة فروع متوازية P وI وD ثم اجمعها. القانون: u=Kp e + Ki integral(e dt) + Kd de/dt.",
+        explanation: "الرسم: e(t) -> [Kp || Ki/s || Kd*s] -> summing point -> u(t)."
+      },
+      {
+        id: "act_compare", type: "essay", category: "Actuators",
+        promptEn: "Compare pneumatic and hydraulic actuators and give an example of each.",
+        answerEn: "Pneumatic actuators use compressed air, are clean, fast, simple, and suitable for moderate forces, but air compressibility reduces stiffness and positioning accuracy. Example: a pneumatic diaphragm valve actuator. Hydraulic actuators use pressurized oil, provide much higher force and accurate load holding, but are heavier and require pumps, return lines, and leak maintenance. Example: a hydraulic steering-gear ram.",
+        displayAnswer: "Pneumatic سريع ونظيف لكن قوته ودقته أقل بسبب انضغاط الهواء. Hydraulic أقوى وأثبت لكنه أثقل وقد يتسرب الزيت. أمثلة: control valve وsteering gear ram.",
+        explanation: "المقارنة الأساسية: medium، force، speed، accuracy، cleanliness، maintenance."
+      },
+      {
+        id: "act_motor", type: "essay", category: "Actuators",
+        promptEn: "Give an example of using an electric motor as a marine actuator.",
+        answerEn: "An electric motor can actuate a motor-operated seawater or ballast valve. A controller energizes the motor in the opening or closing direction; a gearbox increases torque, and limit switches stop the motor at the fully open and fully closed positions. Other examples are winches, windlasses, fans, and pump drives.",
+        displayAnswer: "مثال: motor-operated ballast valve؛ المتحكم يشغل المحرك، gearbox يحرك الصمام، وlimit switches توقفه عند الفتح أو الإغلاق الكامل.",
+        explanation: "المخطط: Controller -> motor starter -> motor + gearbox -> valve -> limit switches."
+      },
+      {
+        id: "seq_define", type: "essay", category: "Sequential Control",
+        promptEn: "Define sequential control and list five characteristics.",
+        answerEn: "Sequential control is the automatic execution of a series of operations in a fixed order according to predetermined conditions or signals; each operation starts after the required previous condition is completed. Five characteristics are ordered operation, event-based transition, automatic operation, interlocking, and repeatability. Safety is an additional key characteristic.",
+        displayAnswer: "التحكم التتابعي ينفذ خطوات بترتيب محدد، وكل خطوة تبدأ بعد تحقق شرط الخطوة السابقة. خصائصه: ordered, event-based, automatic, interlocked, repeatable.",
+        explanation: "المصدر يذكر أيضًا safety كخاصية رئيسية."
+      },
+      {
+        id: "seq_importance", type: "essay", category: "Sequential Control",
+        promptEn: "Why is sequential control important in marine systems?",
+        answerEn: "Marine machinery often requires several operations to occur in the correct order. Sequential control prevents unsafe actions, reduces operator error, allows automatic starting and stopping, improves repeatability, protects equipment and personnel, and supports reliable unattended operation.",
+        displayAnswer: "مهم لأن تشغيل معدات السفينة يحتاج ترتيبًا آمنًا؛ يمنع الخطوات الخطرة ويقلل خطأ المشغل ويحسن الاعتمادية والحماية.",
+        explanation: "أمثلة: diesel engine start، boiler burner، air compressor، tank filling."
+      },
+      {
+        id: "seq_components", type: "essay", category: "Sequential Control",
+        promptEn: "Name six components of a sequential control system.",
+        answerEn: "Six typical components are push buttons/selectors, sensors or limit switches, relays, contactors, timers, and a PLC or sequence controller. Other valid components include counters, solenoid valves, motors, alarms, and indicator lamps.",
+        displayAnswer: "ستة مكونات: push buttons، sensors/limit switches، relays، contactors، timers، PLC.",
+        explanation: "يمكن تقسيمها إلى input devices، control devices، output devices."
+      },
+      {
+        id: "seq_timer", type: "essay", category: "Sequential Control",
+        promptEn: "What is the function of a timer in sequential control?",
+        answerEn: "A timer introduces a preset delay or maintains an operation for a specified period before permitting the next step. It ensures correct timing, for example allowing boiler pre-purge before ignition or delaying a second motor start.",
+        displayAnswer: "الـ timer يؤخر أو يحدد مدة خطوة قبل السماح بالخطوة التالية، مثل مدة pre-purge قبل إشعال الغلاية.",
+        explanation: "Timer output becomes a condition for the next step."
+      },
+      {
+        id: "seq_limit", type: "essay", category: "Sequential Control",
+        promptEn: "What is the purpose of a limit switch?",
+        answerEn: "A limit switch detects that a moving part has reached a specified mechanical position. It provides a discrete confirmation signal to stop the present motion or enable the next step, such as confirming that a valve is fully open.",
+        displayAnswer: "Limit switch يؤكد وصول الجزء المتحرك إلى موضع محدد، ثم يوقف الحركة أو يسمح بالخطوة التالية.",
+        explanation: "مثال: valve fully open/closed confirmation."
+      },
+      {
+        id: "seq_interlock", type: "essay", category: "Sequential Control",
+        promptEn: "Why are interlocks used in sequential control?",
+        answerEn: "Interlocks prevent an operation unless all required safety and process conditions are satisfied. They also prevent conflicting actions from occurring together. For example, burner ignition is blocked without combustion-air flow, and forward and reverse motor contactors cannot energize simultaneously.",
+        displayAnswer: "Interlocks تمنع الخطوة إذا لم تتحقق شروط الأمان، وتمنع أوامر متعارضة من العمل معًا.",
+        explanation: "الهدف حماية المعدات والأشخاص والعملية."
+      },
+      {
+        id: "seq_diesel", type: "essay", category: "Sequential Control",
+        promptEn: "Describe the sequence for starting a marine diesel engine.",
+        answerEn: "Start command -> verify interlocks and turning gear disengaged -> start lubricating-oil pump and confirm pressure -> start cooling-water pump and confirm flow -> start fuel system -> admit starting air and crank -> confirm minimum firing speed -> admit fuel/ignite -> confirm engine running -> disengage starting air -> monitor oil pressure, cooling, speed, and exhaust alarms.",
+        displayAnswer: "الترتيب: تحقق interlocks ثم lube oil ثم cooling water ثم fuel ثم starting air/cranking ثم تشغيل الوقود وتأكيد دوران المحرك والمراقبة.",
+        explanation: "كل انتقال يحتاج feedback مثل pressure switch أو speed sensor."
+      },
+      {
+        id: "seq_tank", type: "essay", category: "Sequential Control",
+        promptEn: "Explain the operation of an automatic tank filling system.",
+        answerEn: "When the low-level switch is active and filling is permitted, the controller starts the pump or opens the inlet valve. The level rises while the system monitors pump and valve status. When the high-level switch operates, the pump stops or the valve closes. An overflow alarm and interlock provide protection.",
+        displayAnswer: "Low level يبدأ المضخة/يفتح الصمام، ويستمر الملء حتى high level ثم تتوقف المضخة/يغلق الصمام مع alarm للحماية.",
+        explanation: "المخطط: Low level -> Pump ON -> Filling -> High level -> Pump OFF."
+      },
+      {
+        id: "seq_compare", type: "essay", category: "Sequential Control",
+        promptEn: "Compare continuous control with sequential control.",
+        answerEn: "Continuous control continuously measures and adjusts a variable using continuous feedback, such as temperature or pressure regulation. Sequential control performs discrete step-by-step actions in a defined order using events, timers, switches, and sensors, such as an engine-starting sequence.",
+        displayAnswer: "Continuous يضبط متغيرًا بشكل مستمر باستخدام feedback، أما Sequential فينفذ خطوات منفصلة مرتبة بواسطة events وtimers وsensors.",
+        explanation: "مثال continuous: temperature control. مثال sequential: engine starting."
+      },
+      {
+        id: "seq_boiler", type: "essay", category: "Sequential Control",
+        promptEn: "Draw a block diagram for the sequential operation of an oil-fired boiler.",
+        answerEn: "Start demand -> check water level, fuel pressure, air pressure and flame-failure interlocks -> start forced-draught fan -> prove air flow -> pre-purge timer -> open pilot fuel and energize igniter -> prove pilot flame -> open main fuel valve -> prove main flame -> normal firing/modulation. On flame failure: close fuel valves immediately, alarm, and post-purge before reset.",
+        displayAnswer: "المخطط يبدأ بفحص interlocks ثم fan وair proof ثم pre-purge ثم pilot/ignition ثم flame proof ثم main fuel؛ وعند flame failure يغلق الوقود فورًا.",
+        explanation: "ارسم كل خطوة داخل مستطيل واربطها بأسهم؛ اجعل flame failure يرجع إلى trip/alarm."
+      },
+      {
+        id: "seq_compressor", type: "essay", category: "Sequential Control",
+        promptEn: "Draw a block diagram for the sequential operation of a main air compressor.",
+        answerEn: "Receiver pressure low -> check oil pressure, cooling-water flow, unload condition and motor interlocks -> open cooling water/start auxiliaries -> unload compressor -> start motor -> confirm running -> load compressor -> compress air -> receiver pressure high -> unload -> stop motor after delay -> close auxiliaries. High temperature or low oil pressure causes trip and alarm.",
+        displayAnswer: "Low receiver pressure يبدأ التسلسل بعد فحص الحماية؛ يبدأ compressor unloaded ثم يحمل، وعند high pressure يفصل الحمل ثم يتوقف. الأعطال تسبب trip/alarm.",
+        explanation: "المخطط: P low -> Interlocks -> Unload -> Motor start -> Load -> P high -> Unload -> Stop."
+      },
+      {
+        id: "msb_function", type: "essay", category: "Main Switchboard",
+        promptEn: "State the function of the Main Switchboard (MSB) on ships.",
+        answerEn: "The MSB receives electrical power from the ship's main generators, controls and protects the generator connections, combines them on the main busbars, and distributes power through protected feeders to ship services. It also provides metering, synchronization, load sharing, isolation, and connection to the emergency switchboard and shore supply where fitted.",
+        displayAnswer: "الـ MSB يستقبل طاقة المولدات ويجمعها على busbars ثم يوزعها ويحمي الدوائر، مع القياس والمزامنة وتقاسم الأحمال والعزل.",
+        explanation: "هو حلقة الوصل الأساسية بين generators وship consumers."
+      },
+      {
+        id: "msb_safety", type: "essay", category: "Main Switchboard",
+        promptEn: "State the safety devices used for a Main Switchboard and the function of each.",
+        answerEn: "ACB: interrupts overload, short-circuit, earth-fault or undervoltage faults. Fuse: melts to isolate high fault current. OCR: detects excessive current and trips the breaker after the set delay. Earth-fault relay: detects insulation leakage to hull. Reverse-power relay: prevents a generator from motoring. Under/over-voltage and under/over-frequency relays: disconnect abnormal supplies. Preferential trip: sheds non-essential loads during overload. Dead-front/interlocks: prevent access or unsafe breaker operation while energized.",
+        displayAnswer: "أهم الحمايات: ACB، fuse، OCR، earth fault، reverse power، voltage/frequency relays، preferential trip، وdead-front/interlocks.",
+        explanation: "كل حماية تعزل الجزء المعطوب حتى لا تسبب blackout أو صدمة أو حريقًا."
+      },
+      {
+        id: "msb_services", type: "essay", category: "Main Switchboard",
+        promptEn: "Describe the services required for the MSB.",
+        answerEn: "The MSB supplies essential and non-essential ship services: propulsion auxiliaries, steering-gear auxiliaries, pumps, fans, compressors, engine-room machinery, cargo and deck machinery, accommodation and galley loads, lighting, navigation and communication equipment, transformers for lower-voltage supplies, battery chargers and the emergency switchboard feeder. Essential services receive priority and suitable redundancy.",
+        displayAnswer: "يوزع MSB الطاقة على المضخات والمراوح والضواغط ومعدات غرفة المحركات والشحن والسطح والسكن والإضاءة والملاحة والاتصالات والمحولات والـ ESB.",
+        explanation: "عادة 440 V للأحمال الرئيسية، 220 V عبر transformer، و24 V DC عبر rectifier/charger."
+      },
+      {
+        id: "msb_acb", type: "essay", category: "Main Switchboard",
+        promptEn: "Describe with aid of a sketch the Air Circuit Breaker (ACB).",
+        answerEn: "An ACB is a low-voltage protective switching device that uses air at atmospheric pressure to extinguish the arc. Main contacts carry normal current; arc contacts open later and transfer the arc to the arc chute, where splitter plates cool and divide it until extinction. A stored-energy spring mechanism opens the breaker when the trip coil receives a signal from protective relays. Sketch: busbar -> fixed/moving contacts -> arc contacts -> arc chute -> load, with trip coil and operating mechanism.",
+        displayAnswer: "ACB يفصل الدائرة عند العطل ويطفئ القوس في الهواء داخل arc chute. ارسم contacts وarc chute وtrip coil وآلية التشغيل بين busbar وload.",
+        explanation: "يحمي عادة من overload، short circuit، earth fault، undervoltage."
+      },
+      {
+        id: "msb_ocr", type: "essay", category: "Main Switchboard",
+        promptEn: "Describe with aid of a sketch the Overcurrent Relay (OCR).",
+        answerEn: "An OCR monitors line current through a current transformer (CT). When current exceeds the pickup setting for the selected time delay, the relay closes its trip contact and energizes the circuit breaker's trip coil, opening and isolating the faulty circuit. Sketch: line -> CT -> OCR measuring coil/logic -> trip contact -> ACB trip coil -> circuit open. Settings include pickup current and operating time or inverse-time characteristic.",
+        displayAnswer: "OCR يقيس التيار بواسطة CT؛ إذا تجاوز setting لمدة محددة يرسل أمرًا إلى trip coil للـ ACB لعزل الدائرة.",
+        explanation: "الرسم: Line -> CT -> OCR -> Trip coil -> ACB opens."
+      },
+      {
+        id: "msb_short", type: "essay", category: "Main Switchboard",
+        promptEn: "State the causes of a short circuit.",
+        answerEn: "Common causes are insulation breakdown due to ageing, heat, moisture, salt or oil contamination; damaged or crushed cables; loose connections and foreign metal objects; incorrect wiring or maintenance; water ingress; equipment winding failure; mechanical vibration and abrasion; rodent damage; overvoltage or lightning; and phase-to-phase or phase-to-earth contact caused by an arc or conductive debris.",
+        displayAnswer: "أسباب القصر تشمل انهيار العزل، الرطوبة والملح، تلف الكابل، التوصيلات المرتخية، الأجسام المعدنية، التوصيل الخاطئ، دخول الماء، تلف الملفات والجهد الزائد.",
+        explanation: "القصر قد يكون phase-phase أو phase-earth ويسبب تيارًا عاليًا جدًا."
+      }
+    );
+
+    quizBank.push(
+      {
+        id: "exam_open_loop_fill", type: "fill", category: "Exam Review",
+        promptEn: "Complete: A control system whose action is independent of the desired output is an ______ control system.",
+        accepted: ["open loop", "open-loop", "open loop control system"],
+        answerEn: "open-loop",
+        displayAnswer: "open-loop control system",
+        explanation: "في open loop لا يتم قياس الخرج وإعادته لتصحيح عملية التحكم."
+      },
+      {
+        id: "exam_error_fill", type: "fill", category: "Exam Review",
+        promptEn: "Complete: The ______ signal is the difference between the reference input and the feedback signal.",
+        accepted: ["error", "error signal"],
+        answerEn: "error",
+        displayAnswer: "error signal",
+        explanation: "في negative feedback: E(s) = R(s) - B(s)."
+      },
+      {
+        id: "exam_positive_eq", type: "fill", category: "Exam Review",
+        promptEn: "Write the closed-loop transfer-function equation for positive feedback.",
+        accepted: ["g/(1-gh)", "g(s)/(1-g(s)h(s))", "g/1-gh"],
+        answerEn: "C(s)/R(s) = G(s) / [1 - G(s)H(s)]",
+        displayAnswer: "C(s)/R(s) = G(s) / [1 - G(s)H(s)]",
+        explanation: "في positive feedback تكون إشارة GH سالبة في المقام."
+      },
+      {
+        id: "exam_room_temp", type: "mcq", category: "Exam Review",
+        promptEn: "Which controller is commonly used to control the temperature of a refrigeration room?",
+        optionsEn: ["ON-OFF thermostat controller", "Derivative-only controller", "Open-loop timer only", "Reverse-power relay"],
+        options: ["ON-OFF thermostat controller", "Derivative-only controller", "Open-loop timer only", "Reverse-power relay"],
+        answer: 0,
+        answerEn: "An ON-OFF thermostat controller.",
+        displayAnswer: "ON-OFF thermostat controller",
+        explanation: "Thermostat يشغل وحدة التبريد عند الحد الأعلى ويفصلها عند الحد الأدنى مع differential gap."
+      },
+      {
+        id: "exam_pid_response", type: "mcq", category: "Exam Review",
+        promptEn: "Which controller combines actions to improve both transient response and steady-state accuracy?",
+        optionsEn: ["PID controller", "Integral-only controller", "Fuse", "Open-loop controller"],
+        options: ["PID controller", "Integral-only controller", "Fuse", "Open-loop controller"],
+        answer: 0,
+        answerEn: "PID controller.",
+        displayAnswer: "PID controller",
+        explanation: "P وD يحسنان الاستجابة العابرة، وI يزيل steady-state error؛ لذلك الإجابة الأدق PID."
+      },
+      {
+        id: "exam_cap_level", type: "essay", category: "Exam Review",
+        promptEn: "Explain how to control or measure tank level using a capacitive level sensor.",
+        answerEn: "Two conductive electrodes, or one probe and the tank wall, form a capacitor. As liquid level rises, more of the dielectric between the electrodes changes from air to liquid, so capacitance changes. An electronic transmitter converts this capacitance into a proportional level signal such as 4-20 mA. The signal can be displayed or compared with a setpoint to operate a pump or valve.",
+        displayAnswer: "المسبار وجدار الخزان يصنعان capacitor؛ ارتفاع السائل يغير dielectric وبالتالي capacitance، ثم يحول transmitter التغير إلى level signal مثل 4-20 mA.",
+        explanation: "المخطط: Level -> capacitance C -> transmitter -> 4-20 mA -> controller/display."
+      },
+      {
+        id: "exam_rtd_calc", type: "numeric", category: "Exam Review",
+        promptEn: "A platinum resistance thermometer is 140.5 ohm at 10 C and becomes 305.3 ohm in hot gas. If alpha = 0.0039 per C, calculate the gas temperature.",
+        value: 310.76, tolerance: 0.2,
+        answerEn: "Using R2 = R1[1 + alpha(T2 - T1)]: T2 = 10 + (305.3/140.5 - 1)/0.0039 = 310.76 C, approximately 311 C.",
+        displayAnswer: "T = 310.76 C تقريبًا 311 C.",
+        explanation: "استخدم مقاومة 140.5 ohm كمرجع عند 10 C، وليس عند صفر."
+      },
+      {
+        id: "exam_distribution", type: "essay", category: "Exam Review",
+        promptEn: "Sketch a complete marine electrical distribution system.",
+        answerEn: "Main generators -> generator ACBs -> main busbars/MSB -> protected feeders to 440 V motors and large auxiliaries. From the MSB, transformers feed 220 V distribution and transformer-rectifiers or battery chargers feed 24 V DC. A tie feeder supplies the emergency switchboard during normal operation; the emergency generator supplies the ESB after main-power failure. Show shore supply, bus-tie breaker, essential loads, and non-essential loads.",
+        displayAnswer: "ارسم generators عبر ACB إلى MSB busbar، ثم 440 V loads وtransformer إلى 220 V وrectifier إلى 24 V، مع ESB/emergency generator وshore supply.",
+        explanation: "سمِّ breakers والباصات والأحمال الأساسية بوضوح."
+      },
+      {
+        id: "exam_cpp", type: "essay", category: "Exam Review",
+        promptEn: "Describe with a block diagram an automatic control system for a controllable-pitch propeller (CPP).",
+        answerEn: "Bridge pitch command/setpoint -> comparator -> pitch controller -> electro-hydraulic converter/servo valve -> hydraulic actuator -> propeller-blade pitch. A pitch-position sensor measures actual blade angle and returns negative feedback to the comparator. Engine-load or shaft-speed limiting may modify the command to prevent overload. Disturbances include sea load and vessel resistance.",
+        displayAnswer: "المخطط: pitch command -> comparator -> controller -> E/H servo valve -> hydraulic actuator -> blade pitch، مع position sensor feedback وحد حمل المحرك.",
+        explanation: "ارسم feedback من actual pitch إلى comparator، ويمكن إضافة engine load limiter."
       }
     );
 
@@ -2060,7 +2396,8 @@
 
     function renderPracticeFilter() {
       const filter = document.getElementById("practiceFilter");
-      filter.innerHTML = categories.map(cat => `<option value="${cat}">${cat}</option>`).join("");
+      const practiceCategories = ["الكل", ...new Set(quizBank.map(q => q.category))];
+      filter.innerHTML = practiceCategories.map(cat => `<option value="${cat}">${cat}</option>`).join("");
       filter.value = "الكل";
       filter.addEventListener("change", () => {
         const cat = filter.value;
